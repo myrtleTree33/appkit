@@ -18,4 +18,4 @@ export function initApp(cli: Cli) {
   cli.parse(process.argv);
 }
 
-export { default as db } from "./db";
+export { default as db, config as dbConfig } from "./db";
