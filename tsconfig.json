@@ -1,11 +1,13 @@
 {
   "compilerOptions": {
     "baseUrl": "./src",
+    "declaration": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "lib": ["DOM", "ESNext"],
     "module": "ESNext",
     "moduleResolution": "node",
+    "outDir": "./dist",
     "resolveJsonModule": true,
     "rootDir": "./src",
     "skipLibCheck": true,

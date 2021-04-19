@@ -1,6 +1,5 @@
 import knex, { Knex } from "knex";
 import { resolve } from "path";
-import { default as FsMigrations } from "./utils/db-fs-migrations";
 
 export interface DB {
   primary: Knex | null;
@@ -41,18 +40,13 @@ for (let envKey in process.env) {
       connection: dbUri,
       pool: { min: dbPool, max: dbPool },
       migrations: {
-        extension: "ts",
+        directory: resolve(process.cwd(), `db/migrate/${dbName.toLowerCase()}`),
         tableName: "schema_migrations",
-        // @ts-ignore
-        migrationSource: new FsMigrations(
-          resolve(process.cwd(), `db/migrate/${dbName.toLowerCase()}`),
-          false,
-          [".ts"]
-        ),
+        loadExtensions: [".cjs"],
       },
       seeds: {
         directory: resolve(process.cwd(), `db/seed/${dbName.toLowerCase()}`),
-        extension: "ts",
+        loadExtensions: [".cjs"],
       },
     };
   }

@@ -2,7 +2,7 @@ import prettier from "prettier";
 import db from "../db";
 import logger from "../logger";
 import { Cli } from "../cli";
-import { readFileSync, writeFileSync } from "node:fs";
+import { readFileSync, renameSync, writeFileSync } from "node:fs";
 
 const { format, resolveConfig } = prettier;
 
@@ -25,8 +25,11 @@ export default (cli: Cli): void => {
           { parser: "typescript", ...prettierConfig } || undefined
         );
         await writeFileSync(fn, prettifiedText, { encoding: "utf8" });
+        await renameSync(fn, fn.replace(".js", ".cjs"));
 
-        logger.info(`Successfully created '${fn?.replace(process.cwd() + "/", "")}'!`);
+        logger.info(
+          `Successfully created '${fn?.replace(process.cwd() + "/", "").replace(".js", ".cjs")}'!`
+        );
       } catch (err) {
         logger.error(err);
         process.exit(1);

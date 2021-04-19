@@ -1,8 +1,6 @@
-import knex from "knex";
 import db from "../db";
 import logger from "../logger";
 import { Cli } from "../cli";
-import { default as Seeder } from "../utils/db-seeder";
 
 export default (cli: Cli): void => {
   cli
@@ -15,8 +13,7 @@ export default (cli: Cli): void => {
         }
 
         logger.info("Started seeding the database......");
-        const seeder = new Seeder(db[opts.target] || knex({}));
-        await seeder.run();
+        await db[opts.target]?.seed.run();
         logger.info("Started seeding the database...... SUCCESS");
       } catch (err) {
         logger.error(err);

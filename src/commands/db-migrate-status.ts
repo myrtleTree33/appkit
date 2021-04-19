@@ -25,8 +25,7 @@ export default (cli: Cli): void => {
         }
 
         if (migrations[1] && migrations[1].length > 0) {
-          if (message === "") message += "\n";
-          message += "Pending\n";
+          message += "\nPending\n";
           message += "=======\n";
 
           migrations[1].forEach((m: { [key: string]: string }) => {
