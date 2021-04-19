@@ -2,7 +2,8 @@ export { default as config } from "./config";
 export { default as logger } from "./logger";
 export { default as server } from "./server";
 
-import { default as cli, Cli } from "./cli";
+import { default as cli } from "./cli";
+import type { Cli } from "./cli";
 import { default as dbMigrate } from "./commands/db-migrate";
 import { default as dbMigrateNew } from "./commands/db-migrate-new";
 import { default as dbMigrateStatus } from "./commands/db-migrate-status";
@@ -25,7 +26,8 @@ dev(cli);
 server(cli);
 worker(cli);
 
-export { cli, Cli };
+export { cli };
+export type { Cli };
 
 export function initApp(cli: Cli) {
   cli.parse(process.argv);
