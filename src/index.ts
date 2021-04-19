@@ -1,5 +1,6 @@
 export { default as config } from "./config";
 export { default as logger } from "./logger";
+export { default as server } from "./server";
 
 import { default as cli, Cli } from "./cli";
 import { default as dbMigrate } from "./commands/db-migrate";

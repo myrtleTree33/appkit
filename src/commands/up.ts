@@ -17,7 +17,8 @@ export default (cli: Cli): void => {
 
       try {
         for (let dbName in db) {
-          logger.info(`Wait 15s for '${dbName}' database to be ready...`);
+          // TODO: Find a better way to ping the database readiness.
+          logger.info(`Wait 30s for '${dbName}' database to be ready...`);
           await sleep(15000);
 
           logger.info(`Started migrating the '${dbName}' database...`);

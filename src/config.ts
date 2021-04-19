@@ -19,7 +19,7 @@ function getConfig(): Config {
     process.env.NODE_ENV = "development";
   }
 
-  const configPath = resolve(process.cwd(), `configs/.env.${process.env.APPKIT_ENV}`);
+  const configPath = resolve(process.cwd(), `configs/${process.env.APPKIT_ENV}.env`);
   const result = config({
     path: configPath,
   });
