@@ -7,13 +7,23 @@ import uWebSockets, {
   us_listen_socket,
 } from "uWebSockets.js";
 
-const { App } = uWebSockets;
+const { App, us_listen_socket_close } = uWebSockets;
 
 export class Server {
   #server: TemplatedApp;
+  #listenSocket: us_listen_socket | null;
 
   constructor() {
     this.#server = App({});
+    this.#listenSocket = null;
+  }
+
+  public get listenSocket(): us_listen_socket | null {
+    return this.#listenSocket;
+  }
+
+  public set listenSocket(_listenSocket: us_listen_socket | null) {
+    this.#listenSocket = _listenSocket;
   }
 
   any(
@@ -21,6 +31,12 @@ export class Server {
     handler: (res: HttpResponse, req: HttpRequest) => void
   ): TemplatedApp {
     return this.#server.any(pattern, handler);
+  }
+
+  close() {
+    if (!this.#listenSocket) return;
+    us_listen_socket_close(this.#listenSocket);
+    this.#listenSocket = null;
   }
 
   connect(
