@@ -8,24 +8,33 @@ export default (cli: Cli): void => {
     .option("-t, --target", "The target database to work with.", "primary")
     .action(async (opts) => {
       try {
+        if (!db[opts.target]) {
+          throw new Error(`The '${opts.target}' database doesn't exist.`);
+        }
+
+        let message = "";
         const migrations = await db[opts.target]?.migrate.list();
 
         if (migrations[0] && migrations[0].length > 0) {
-          console.log("\nMigrated");
-          console.log("========");
+          message += "\nMigrated\n";
+          message += "========\n";
+
           migrations[0].forEach((m: string) => {
-            console.log(`${m}\n`);
+            message += `${m}\n`;
           });
         }
 
         if (migrations[1] && migrations[1].length > 0) {
-          console.log("Pending");
-          console.log("=======");
+          if (message === "") message += "\n";
+          message += "Pending\n";
+          message += "=======\n";
+
           migrations[1].forEach((m: { [key: string]: string }) => {
-            console.log(`${m.file}\n`);
+            message += `${m.file}\n`;
           });
-          console.log();
         }
+
+        console.log(message);
       } catch (err) {
         logger.error(err);
         process.exit(1);

@@ -13,6 +13,10 @@ export default (cli: Cli): void => {
     .option("-t, --target", "The target database to work with.", "primary")
     .action(async (name, opts) => {
       try {
+        if (!db[opts.target]) {
+          throw new Error(`The '${opts.target}' database doesn't exist.`);
+        }
+
         const fn = (await db[opts.target]?.migrate.make(name)) || "";
         const text = readFileSync(fn, "utf8");
         const prettierConfig = await resolveConfig(process.cwd());

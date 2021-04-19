@@ -2,7 +2,7 @@ import dockerCompose from "docker-compose";
 import { Cli } from "../cli";
 
 export default (cli: Cli): void => {
-  cli.command("dc:down", "Destroy the `docker-compose` cluster.").action(async (opts) => {
+  cli.command("down", "Destroy the `docker-compose` cluster.").action(async (opts) => {
     try {
       await dockerCompose.down({
         cwd: process.cwd(),
