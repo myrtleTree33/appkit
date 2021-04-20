@@ -1,6 +1,7 @@
 export { default as config } from "./config";
 export { default as logger } from "./logger";
 export { default as server } from "./server";
+export type { HttpResponse, HttpRequest } from "uWebSockets.js";
 import { default as cli } from "./cli";
 import type { Cli } from "./cli";
 export { cli };
