@@ -1,3 +1,4 @@
+import tinyGlob from "tiny-glob";
 import uWebSockets, {
   HttpRequest,
   HttpResponse,
@@ -158,6 +159,10 @@ export class Server {
 
 async function getServer(): Promise<Server> {
   const server = new Server();
+  const files = await tinyGlob(`${process.cwd()}/src/routes/**/*.{ts}`);
+  files.forEach(async (f) => {
+    await import(`${process.cwd()}/${f}`);
+  });
 
   server.initFileBasedRouter();
   return server;

@@ -1,3 +1,4 @@
+import tinyGlob from "tiny-glob";
 import uWebSockets from "uWebSockets.js";
 import { createServer as createViteServer } from "vite";
 import config from "./config";
@@ -86,6 +87,10 @@ export class Server {
 }
 async function getServer() {
     const server = new Server();
+    const files = await tinyGlob(`${process.cwd()}/src/routes/**/*.{ts}`);
+    files.forEach(async (f) => {
+        await import(`${process.cwd()}/${f}`);
+    });
     server.initFileBasedRouter();
     return server;
 }
