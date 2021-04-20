@@ -15,8 +15,8 @@ export const config: DBConfig = {
   primary: null,
 };
 
-const DB_URI_PREFIX = "DB_URI_";
-const DB_POOL_PREFIX = "DB_POOL_";
+const DB_URI_PREFIX = "APPKIT_DB_URI_";
+const DB_POOL_PREFIX = "APPKIT_DB_POOL_";
 
 for (let envKey in process.env) {
   if (envKey.startsWith(DB_URI_PREFIX)) {
