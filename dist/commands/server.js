@@ -9,5 +9,10 @@ export default (cli) => {
                 logger.info(`Server is listening on http://${config.host}:${config.port}...`);
             }
         });
+        function handler() {
+            server.close();
+        }
+        process.on("SIGINT", handler);
+        process.on("SIGTERM", handler);
     });
 };

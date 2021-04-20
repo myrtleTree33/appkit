@@ -57,6 +57,7 @@ export class Server {
   }
 
   close() {
+    this.#viteServer?.close();
     if (!this.#listenSocket) return;
     us_listen_socket_close(this.#listenSocket);
     this.#listenSocket = null;
@@ -90,11 +91,15 @@ export class Server {
     return this.#server.head(pattern, handler);
   }
 
-  listen(
+  async listen(
     host: RecognizedString,
     port: number,
     cb: (listenSocket: us_listen_socket) => void
-  ): TemplatedApp {
+  ): Promise<TemplatedApp> {
+    if (config.nodeEnv === "development") {
+      await this.createViteServer();
+    }
+
     return this.#server.listen(host, port, cb);
   }
 
@@ -153,10 +158,6 @@ export class Server {
 
 async function getServer(): Promise<Server> {
   const server = new Server();
-
-  if (config.nodeEnv === "development") {
-    await server.createViteServer();
-  }
 
   server.initFileBasedRouter();
   return server;

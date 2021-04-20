@@ -35,6 +35,7 @@ export class Server {
         return this.#server.any(pattern, handler);
     }
     close() {
+        this.#viteServer?.close();
         if (!this.#listenSocket)
             return;
         us_listen_socket_close(this.#listenSocket);
@@ -52,7 +53,10 @@ export class Server {
     head(pattern, handler) {
         return this.#server.head(pattern, handler);
     }
-    listen(host, port, cb) {
+    async listen(host, port, cb) {
+        if (config.nodeEnv === "development") {
+            await this.createViteServer();
+        }
         return this.#server.listen(host, port, cb);
     }
     numSubscribers(topic) {
@@ -82,9 +86,6 @@ export class Server {
 }
 async function getServer() {
     const server = new Server();
-    if (config.nodeEnv === "development") {
-        await server.createViteServer();
-    }
     server.initFileBasedRouter();
     return server;
 }
