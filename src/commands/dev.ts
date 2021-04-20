@@ -23,8 +23,13 @@ export default (cli: Cli): void => {
       .on("log", (msg: LogMessage) => {})
       .on("quit", (code: number) => {})
       .on("restart", (files: string[]) => {
-        // TODO: Delete all appkit's environment variables so that dotenv can reload the new values from development.env.
-        delete process.env.DB_URI_PRIMARY;
+        // This is needed due to dotenv only loads the `*.env` values into `process.env` if the
+        // environment variable isn't set yet.
+        Object.keys(process.env).forEach((key) => {
+          if (key.startsWith("APP_")) {
+            delete process.env[key];
+          }
+        });
       })
       .on("start", () => {})
       .on("stderr", (data: Buffer) => {})

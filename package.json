@@ -8,7 +8,10 @@
     "dist"
   ],
   "scripts": {
+    "clean": "rimraf ./dist",
+    "prebuild": "npm run clean",
     "build": "tsc",
+    "predev": "npm run clean",
     "dev": "tsc --watch",
     "test": "jest"
   },
@@ -47,6 +50,7 @@
     "nodemon": "^2.0.7",
     "pino-pretty": "^4.7.1",
     "prettier": "^2.2.1",
+    "rimraf": "^2.7.1",
     "svelte-preprocess": "^4.7.1",
     "typescript": "^4.2.4"
   }
