@@ -6,16 +6,22 @@ import uWebSockets, {
   WebSocketBehavior,
   us_listen_socket,
 } from "uWebSockets.js";
+import { createServer as createViteServer } from "vite";
+import type { ViteDevServer } from "vite";
+import config from "./config";
+import { IncomingMessage, ServerResponse } from "node:http";
+import { Socket } from "node:net";
 
 const { App, us_listen_socket_close } = uWebSockets;
 
 export class Server {
-  #server: TemplatedApp;
   #listenSocket: us_listen_socket | null;
+  #server: TemplatedApp;
+  #viteServer?: ViteDevServer;
 
   constructor() {
-    this.#server = App({});
     this.#listenSocket = null;
+    this.#server = App({});
   }
 
   public get listenSocket(): us_listen_socket | null {
@@ -24,6 +30,23 @@ export class Server {
 
   public set listenSocket(_listenSocket: us_listen_socket | null) {
     this.#listenSocket = _listenSocket;
+  }
+
+  async createViteServer() {
+    this.#viteServer = await createViteServer({
+      server: { middlewareMode: true },
+    });
+  }
+
+  initFileBasedRouter() {
+    // this.#server.any("/*", (res: HttpResponse, req: HttpRequest) => {
+    //   if (config.nodeEnv === "development") {
+    //     // TODO: Convert HttpRequest to IncomingMessage and HttpResponse to ServerResponse.
+    //     const newReq = new IncomingMessage(new Socket());
+    //     const newRes = new ServerResponse(newReq);
+    //     this.#viteServer?.middlewares(newReq, newRes, async () => {});
+    //   }
+    // });
   }
 
   any(
@@ -128,8 +151,15 @@ export class Server {
   }
 }
 
-function getServer(): Server {
-  return new Server();
+async function getServer(): Promise<Server> {
+  const server = new Server();
+
+  if (config.nodeEnv === "development") {
+    await server.createViteServer();
+  }
+
+  server.initFileBasedRouter();
+  return server;
 }
 
-export default getServer();
+export default await getServer();

@@ -26,7 +26,7 @@ export default (cli: Cli): void => {
         // This is needed due to dotenv only loads the `*.env` values into `process.env` if the
         // environment variable isn't set yet.
         Object.keys(process.env).forEach((key) => {
-          if (key.startsWith("APP_")) {
+          if (key.startsWith("APPKIT_")) {
             delete process.env[key];
           }
         });

@@ -1,8 +1,8 @@
 import { default as config } from "../config";
 import { default as logger } from "../logger";
 import { default as server } from "../server";
-import { Cli } from "../cli";
-import { us_listen_socket } from "uWebSockets.js";
+import type { Cli } from "../cli";
+import type { us_listen_socket } from "uWebSockets.js";
 
 export default (cli: Cli): void => {
   cli.command("server", "Start the HTTP server.").action(() => {
