@@ -26,7 +26,7 @@ function getConfig(): Config {
 
   return {
     appkitEnv: process.env.APPKIT_ENV || "development",
-    configPath: result?.error ? "" : configPath,
+    configPath: result?.error ? "" : configPath.replace(`${process.cwd()}/`, ""),
     host: process.env.APPKIT_HOST || "0.0.0.0",
     loggerRedactPaths: process.env.APPKIT_LOGGER_REDACT_PATHS
       ? process.env.APPKIT_LOGGER_REDACT_PATHS.split(",")

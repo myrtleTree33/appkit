@@ -1,8 +1,8 @@
 import nodemon, { LogMessage } from "nodemon";
-import { Cli } from "../cli";
+import type { Cmd } from "./cmd";
 
-export default (cli: Cli): void => {
-  cli.command("dev", "Start the server/worker in development mode.").action(() => {
+export default (cmd: Cmd): void => {
+  cmd.command("dev", "Start the server/worker in development mode.").action(() => {
     const server = nodemon({
       delay: 1,
       env: {

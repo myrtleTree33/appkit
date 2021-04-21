@@ -1,9 +1,9 @@
-import db from "../db";
-import logger from "../logger";
-import { Cli } from "../cli";
+import { db } from "../db";
+import { logger } from "../support";
+import type { Cmd } from "./cmd";
 
-export default (cli: Cli): void => {
-  cli
+export default (cmd: Cmd): void => {
+  cmd
     .command("db:rollback", "Rollback the database schema to previous version.")
     .option("-t, --target", "The target database to work with.", "primary")
     .action(async (opts) => {

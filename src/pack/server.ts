@@ -9,9 +9,7 @@ import uWebSockets, {
 } from "uWebSockets.js";
 import { createServer as createViteServer } from "vite";
 import type { ViteDevServer } from "vite";
-import config from "./config";
-import { IncomingMessage, ServerResponse } from "node:http";
-import { Socket } from "node:net";
+import { config } from "../support";
 
 const { App, us_listen_socket_close } = uWebSockets;
 

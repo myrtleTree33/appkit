@@ -1,9 +1,10 @@
-import db from "../db";
-import logger from "../logger";
-import { Cli } from "../cli";
+import { db } from "../db";
+import { logger } from "../support";
 
-export default (cli: Cli): void => {
-  cli
+import type { Cmd } from "./cmd";
+
+export default (cmd: Cmd): void => {
+  cmd
     .command("db:seed", "Seed the database with minimal data to start the local development work.")
     .option("-t, --target", "The target database to work with.", "primary")
     .action(async (opts) => {

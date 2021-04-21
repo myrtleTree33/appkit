@@ -1,15 +1,15 @@
 import dockerCompose from "docker-compose";
-import knex from "knex";
-import db from "../db";
-import logger from "../logger";
-import { Cli } from "../cli";
+
+import { db } from "../db";
+import { logger } from "../support";
+import type { Cmd } from "./cmd";
 
 async function sleep(millis: number) {
   return new Promise((resolve) => setTimeout(resolve, millis));
 }
 
-export default (cli: Cli): void => {
-  cli
+export default (cmd: Cmd): void => {
+  cmd
     .command("up", "Setup the `docker-compose` cluster with the databases migrated/seeded.")
     .action(async () => {
       await dockerCompose.upAll({ cwd: process.cwd(), log: true });

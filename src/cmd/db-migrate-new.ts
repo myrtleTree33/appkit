@@ -1,13 +1,14 @@
-import prettier from "prettier";
-import db from "../db";
-import logger from "../logger";
-import { Cli } from "../cli";
 import { readFileSync, renameSync, writeFileSync } from "node:fs";
+import prettier from "prettier";
 
 const { format, resolveConfig } = prettier;
 
-export default (cli: Cli): void => {
-  cli
+import { db } from "../db";
+import { logger } from "../support";
+import type { Cmd } from "./cmd";
+
+export default (cmd: Cmd): void => {
+  cmd
     .command("db:migrate:new <name>", "Generate a new database migration file.")
     .example("db:migrate:new create_users")
     .option("-t, --target", "The target database to work with.", "primary")
