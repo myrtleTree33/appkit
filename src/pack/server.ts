@@ -8,7 +8,7 @@ import uWebSockets, {
   us_listen_socket,
 } from "uWebSockets.js";
 import type { ViteDevServer } from "vite";
-import { config } from "../support";
+import { logger } from "../support";
 
 const { App, us_listen_socket_close } = uWebSockets;
 
@@ -135,10 +135,18 @@ export class Server {
 
 async function getServer(): Promise<Server> {
   const server = new Server();
-  const files = await tinyGlob(`${process.cwd()}/src/routes/**/*.{ts}`);
-  files.forEach(async (f) => {
-    await import(`${process.cwd()}/${f}`);
-  });
+
+  try {
+    const files = await tinyGlob(`${process.cwd()}/src/routes/**/*.{ts}`);
+
+    await Promise.all(
+      files.map(async (f: string) => {
+        await import(`${process.cwd()}/${f}`);
+      })
+    );
+  } catch (err) {
+    logger.warn(err.message);
+  }
 
   return server;
 }
