@@ -18,7 +18,7 @@ export const dbConfig: DBConfig = {
 const DB_URI_PREFIX = "APPKIT_DB_URI_";
 const DB_POOL_PREFIX = "APPKIT_DB_POOL_";
 
-for (let envKey in process.env) {
+for (const envKey in process.env) {
   if (envKey.startsWith(DB_URI_PREFIX)) {
     const dbUri = process.env[envKey];
     if (!dbUri) continue;
@@ -28,7 +28,7 @@ for (let envKey in process.env) {
       ? parseInt(process.env[`${DB_POOL_PREFIX}_${dbName}`] || "10")
       : 10;
 
-    let client: string = "sqlite3";
+    let client = "sqlite3";
     if (dbUri.startsWith("mysql")) {
       client = "mysql2";
     } else if (dbUri.startsWith("postgres")) {

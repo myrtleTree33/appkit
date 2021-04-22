@@ -1,4 +1,4 @@
-import nodemon, { LogMessage } from "nodemon";
+import nodemon from "nodemon";
 import type { Cmd } from "./cmd";
 
 export default (cmd: Cmd): void => {
@@ -18,23 +18,16 @@ export default (cmd: Cmd): void => {
       watch: ["configs", "src"],
     });
 
-    server
-      .on("crash", () => {})
-      .on("log", (msg: LogMessage) => {})
-      .on("quit", (code: number) => {})
-      .on("restart", (files: string[]) => {
-        // This is needed due to dotenv only loads the `*.env` values into `process.env` if the
-        // environment variable isn't set yet.
-        Object.keys(process.env).forEach((key) => {
-          if (key.startsWith("APPKIT_")) {
-            delete process.env[key];
-          }
-        });
-      })
-      .on("start", () => {})
-      .on("stderr", (data: Buffer) => {})
-      .on("stdout", (data: Buffer) => {})
-      .on("watching", (files: string[]) => {});
+    // Available events: crash, log, quit, start, stderr, stdout, watching.
+    server.on("restart", () => {
+      // This is needed due to dotenv only loads the `*.env` values into `process.env` if the
+      // environment variable isn't set yet.
+      Object.keys(process.env).forEach((key) => {
+        if (key.startsWith("APPKIT_")) {
+          delete process.env[key];
+        }
+      });
+    });
 
     const handler = () => {
       server.emit("quit");

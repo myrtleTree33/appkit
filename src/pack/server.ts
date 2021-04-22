@@ -7,7 +7,6 @@ import uWebSockets, {
   WebSocketBehavior,
   us_listen_socket,
 } from "uWebSockets.js";
-import { createServer as createViteServer } from "vite";
 import type { ViteDevServer } from "vite";
 import { config } from "../support";
 
@@ -31,23 +30,6 @@ export class Server {
     this.#listenSocket = _listenSocket;
   }
 
-  async createViteServer() {
-    this.#viteServer = await createViteServer({
-      server: { middlewareMode: true },
-    });
-  }
-
-  initFileBasedRouter() {
-    // this.#server.any("/*", (res: HttpResponse, req: HttpRequest) => {
-    //   if (config.nodeEnv === "development") {
-    //     // TODO: Convert HttpRequest to IncomingMessage and HttpResponse to ServerResponse.
-    //     const newReq = new IncomingMessage(new Socket());
-    //     const newRes = new ServerResponse(newReq);
-    //     this.#viteServer?.middlewares(newReq, newRes, async () => {});
-    //   }
-    // });
-  }
-
   any(
     pattern: RecognizedString,
     handler: (res: HttpResponse, req: HttpRequest) => void
@@ -55,7 +37,7 @@ export class Server {
     return this.#server.any(pattern, handler);
   }
 
-  close() {
+  close(): void {
     this.#viteServer?.close();
     if (!this.#listenSocket) return;
     us_listen_socket_close(this.#listenSocket);
@@ -162,7 +144,6 @@ async function getServer(): Promise<Server> {
     await import(`${process.cwd()}/${f}`);
   });
 
-  server.initFileBasedRouter();
   return server;
 }
 

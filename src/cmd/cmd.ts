@@ -1,6 +1,6 @@
 import sade from "sade";
 
-export interface Cmd extends sade.Sade {}
+export type Cmd = sade.Sade;
 
 function getCmd(): Cmd {
   return sade("./app");

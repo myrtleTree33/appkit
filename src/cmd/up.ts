@@ -15,7 +15,7 @@ export default (cmd: Cmd): void => {
       await dockerCompose.upAll({ cwd: process.cwd(), log: true });
 
       try {
-        for (let dbName in db) {
+        for (const dbName in db) {
           const timeout = 30;
           // TODO: Find a better way to ping the database readiness.
           logger.info(`Wait ${timeout}s for '${dbName}' database to be ready...`);
@@ -33,7 +33,7 @@ export default (cmd: Cmd): void => {
         logger.error(err);
         process.exit(1);
       } finally {
-        for (let dbName in db) {
+        for (const dbName in db) {
           await db[dbName]?.destroy();
         }
       }

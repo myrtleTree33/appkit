@@ -1,5 +1,3 @@
-import * as Pino from "pino";
-
 const OLD_ENV = process.env;
 
 beforeEach(() => {
