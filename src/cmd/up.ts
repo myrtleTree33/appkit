@@ -1,6 +1,6 @@
 import dockerCompose from "docker-compose";
 
-import { db } from "../db";
+import { db } from "../record";
 import { logger } from "../support";
 import type { Cmd } from "./cmd";
 

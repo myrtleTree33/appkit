@@ -11,7 +11,7 @@ export interface DBConfig {
   [key: string]: Knex.Config | null;
 }
 
-export const config: DBConfig = {
+export const dbConfig: DBConfig = {
   primary: null,
 };
 
@@ -35,7 +35,7 @@ for (let envKey in process.env) {
       client = "postgres";
     }
 
-    config[dbName.toLowerCase()] = {
+    dbConfig[dbName.toLowerCase()] = {
       client,
       connection: dbUri,
       pool: { min: dbPool, max: dbPool },
@@ -54,7 +54,7 @@ for (let envKey in process.env) {
 
 function getDB(): DB {
   return {
-    primary: config.primary ? knex(config.primary) : null,
+    primary: dbConfig.primary ? knex(dbConfig.primary) : null,
   };
 }
 
