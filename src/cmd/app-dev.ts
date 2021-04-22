@@ -2,7 +2,7 @@ import nodemon from "nodemon";
 import type { Cmd } from "./cmd";
 
 export default (cmd: Cmd): void => {
-  cmd.command("dev", "Start the server/worker in development mode.").action(() => {
+  cmd.command("app:dev", "Start the server/worker in development mode.").action(() => {
     const server = nodemon({
       delay: 1,
       env: {

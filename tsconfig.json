@@ -4,15 +4,15 @@
     "declaration": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
-    "lib": ["DOM", "ESNext"],
-    "module": "ESNext",
+    "lib": ["DOM", "ES2020"],
+    "module": "ES2020",
     "moduleResolution": "node",
     "outDir": "./dist",
     "resolveJsonModule": true,
     "rootDir": "./src",
     "skipLibCheck": true,
     "strict": true,
-    "target": "ESNext"
+    "target": "ES2020"
   },
   "exclude": ["node_modules"],
   "include": ["src"]

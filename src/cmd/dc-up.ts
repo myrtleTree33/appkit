@@ -10,7 +10,7 @@ async function sleep(millis: number) {
 
 export default (cmd: Cmd): void => {
   cmd
-    .command("up", "Setup the `docker-compose` cluster with the databases migrated/seeded.")
+    .command("dc:up", "Setup the `docker-compose` cluster with the databases migrated/seeded.")
     .action(async () => {
       await dockerCompose.upAll({ cwd: process.cwd(), log: true });
 

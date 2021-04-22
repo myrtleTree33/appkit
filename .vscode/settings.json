@@ -1,11 +1,8 @@
 {
-  "emmet.includeLanguages": {
-    "postcss": "css"
+  "editor.codeActionsOnSave": {
+    "source.fixAll": true
   },
   "prettier.prettierPath": "./node_modules/prettier",
-  "[sql]": {
-    "editor.defaultFormatter": "mtxr.sqltools"
-  },
   "[svelte]": {
     "editor.defaultFormatter": "svelte.svelte-vscode"
   }
