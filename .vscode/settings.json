@@ -1,9 +1,5 @@
 {
   "editor.codeActionsOnSave": {
     "source.fixAll": true
-  },
-  "prettier.prettierPath": "./node_modules/prettier",
-  "[svelte]": {
-    "editor.defaultFormatter": "svelte.svelte-vscode"
   }
 }
