@@ -26,7 +26,7 @@ test("returns the default value", () => {
   });
 });
 
-test("returns the value from '__fixtures__/test.env'", () => {
+test("returns the value from '__fixtures__/production.env'", () => {
   jest.isolateModules(() => {
     process.env.APPKIT_ENV = "production";
     const configPath = `${__dirname}/__fixtures__/production.env`;
