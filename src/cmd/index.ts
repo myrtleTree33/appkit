@@ -4,23 +4,23 @@ import { logger } from "../support";
 import { default as cmd } from "./cmd";
 import { default as appDev } from "./app-dev";
 import { default as appServer } from "./app-server";
+import { default as appSetup } from "./app-setup";
+import { default as appTeardown } from "./app-teardown";
 import { default as dbMigrate } from "./db-migrate";
 import { default as dbMigrateNew } from "./db-migrate-new";
 import { default as dbMigrateStatus } from "./db-migrate-status";
 import { default as dbRollback } from "./db-rollback";
 import { default as dbSeed } from "./db-seed";
-import { default as dcDown } from "./dc-down";
-import { default as dcUp } from "./dc-up";
 
 appDev(cmd);
 appServer(cmd);
+appSetup(cmd);
+appTeardown(cmd);
 dbMigrate(cmd);
 dbMigrateNew(cmd);
 dbMigrateStatus(cmd);
 dbRollback(cmd);
 dbSeed(cmd);
-dcDown(cmd);
-dcUp(cmd);
 
 export async function loadAppCommands(): Promise<void> {
   try {

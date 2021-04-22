@@ -10,16 +10,29 @@ async function sleep(millis: number) {
 
 export default (cmd: Cmd): void => {
   cmd
-    .command("dc:up", "Setup the `docker-compose` cluster with the databases migrated/seeded.")
+    .command("app:setup", "Setup the `docker-compose` cluster with the databases migrated/seeded.")
     .action(async () => {
       await dockerCompose.upAll({ cwd: process.cwd(), log: true });
 
       try {
         for (const dbName in db) {
-          const timeout = 30;
-          // TODO: Find a better way to ping the database readiness.
-          logger.info(`Wait ${timeout}s for '${dbName}' database to be ready...`);
-          await sleep(timeout * 1000);
+          if (!db[dbName]) continue;
+
+          const timeout = 3;
+          const dbReady = false;
+
+          while (!dbReady) {
+            try {
+              const result = await db[dbName]?.raw("select 1+1 as result");
+
+              if (result) break;
+              logger.info(`Wait ${timeout}s for '${dbName}' database to be ready...`);
+              await sleep(timeout * 1000);
+            } catch (err) {
+              logger.info(`Wait ${timeout}s for '${dbName}' database to be ready...`);
+              await sleep(timeout * 1000);
+            }
+          }
 
           logger.info(`Started migrating the '${dbName}' database...`);
           await db[dbName]?.migrate.latest();
