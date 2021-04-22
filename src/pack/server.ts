@@ -77,10 +77,6 @@ export class Server {
     port: number,
     cb: (listenSocket: us_listen_socket) => void
   ): Promise<TemplatedApp> {
-    if (config.nodeEnv === "development") {
-      await this.createViteServer();
-    }
-
     return this.#server.listen(host, port, cb);
   }
 

@@ -8,7 +8,6 @@ import { default as down } from "./down";
 import { default as up } from "./up";
 import { default as dev } from "./dev";
 import { default as server } from "./server";
-import { default as worker } from "./worker";
 
 dbMigrate(cmd);
 dbMigrateNew(cmd);
@@ -19,7 +18,6 @@ down(cmd);
 up(cmd);
 dev(cmd);
 server(cmd);
-worker(cmd);
 
 export default cmd;
 export type { Cmd } from "./cmd";
