@@ -5,10 +5,10 @@ module.exports = {
   plugins: ["@typescript-eslint"],
   parserOptions: {
     sourceType: "module",
-    ecmaVersion: 2020,
+    ecmaVersion: 2021,
   },
   env: {
-    es2020: true,
+    es2021: true,
     node: true,
   },
   rules: {
