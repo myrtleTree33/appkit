@@ -1,4 +1,3 @@
-import { time } from "node:console";
 import { dirname } from "path";
 import tinyGlob from "tiny-glob";
 import { fileURLToPath } from "url";
