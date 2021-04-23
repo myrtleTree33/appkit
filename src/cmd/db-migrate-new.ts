@@ -3,8 +3,7 @@ import prettier from "prettier";
 
 const { format, resolveConfig } = prettier;
 
-import { db } from "../record";
-import { logger } from "../support";
+import { db, logger } from "../core";
 import type { Cmd } from "./cmd";
 
 export default (cmd: Cmd): void => {

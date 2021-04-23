@@ -1,6 +1,6 @@
 import tinyGlob from "tiny-glob";
 
-import { logger } from "../support";
+import { logger } from "../core";
 import { default as cmd } from "./cmd";
 import { default as appDev } from "./app-dev";
 import { default as appServer } from "./app-server";

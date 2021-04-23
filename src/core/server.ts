@@ -7,15 +7,13 @@ import uWebSockets, {
   WebSocketBehavior,
   us_listen_socket,
 } from "uWebSockets.js";
-import type { ViteDevServer } from "vite";
-import { logger } from "../support";
+import { default as logger } from "./logger";
 
 const { App, us_listen_socket_close } = uWebSockets;
 
 export class Server {
   #listenSocket: us_listen_socket | null;
   #server: TemplatedApp;
-  #viteServer?: ViteDevServer;
 
   constructor() {
     this.#listenSocket = null;
@@ -38,7 +36,6 @@ export class Server {
   }
 
   close(): void {
-    this.#viteServer?.close();
     if (!this.#listenSocket) return;
     us_listen_socket_close(this.#listenSocket);
     this.#listenSocket = null;

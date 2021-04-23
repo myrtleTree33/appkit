@@ -1,7 +1,6 @@
 import dockerCompose from "docker-compose";
 
-import { db } from "../record";
-import { logger } from "../support";
+import { db, logger } from "../core";
 import type { Cmd } from "./cmd";
 
 async function sleep(millis: number) {

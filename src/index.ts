@@ -1,10 +1,8 @@
 export type { Cmd } from "./cmd";
-export type { DB, DBConfig } from "./record";
+export type { DB, DBConfig } from "./core";
 
 export { default as cmd } from "./cmd";
-export * as record from "./record";
-export * as pack from "./pack";
-export * as support from "./support";
+export { config, logger } from "./core";
 
 import { default as cmd, loadAppCommands } from "./cmd";
 

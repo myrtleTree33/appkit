@@ -1,7 +1,6 @@
 import type { us_listen_socket } from "uWebSockets.js";
 
-import { server } from "../pack";
-import { config, logger } from "../support";
+import { config, logger, server } from "../core";
 import type { Cmd } from "./cmd";
 
 export default (cmd: Cmd): void => {
