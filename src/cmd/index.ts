@@ -1,40 +1,40 @@
+import { time } from "node:console";
+import { dirname } from "path";
 import tinyGlob from "tiny-glob";
+import { fileURLToPath } from "url";
 
-import { logger } from "../core";
-import { default as cmd } from "./cmd";
-import { default as appDev } from "./app-dev";
-import { default as appServer } from "./app-server";
-import { default as appSetup } from "./app-setup";
-import { default as appTeardown } from "./app-teardown";
-import { default as dbMigrate } from "./db-migrate";
-import { default as dbMigrateNew } from "./db-migrate-new";
-import { default as dbMigrateStatus } from "./db-migrate-status";
-import { default as dbRollback } from "./db-rollback";
-import { default as dbSeed } from "./db-seed";
-
-appDev(cmd);
-appServer(cmd);
-appSetup(cmd);
-appTeardown(cmd);
-dbMigrate(cmd);
-dbMigrateNew(cmd);
-dbMigrateStatus(cmd);
-dbRollback(cmd);
-dbSeed(cmd);
+import { config, logger } from "../core";
 
 export async function loadAppCommands(): Promise<void> {
   try {
-    const files = await tinyGlob(`${process.cwd()}/src/commands/**/*.{ts}`);
+    const __dirname = dirname(fileURLToPath(import.meta.url));
+    const builtinFiles = await tinyGlob(`${__dirname}/**/*.{js}`, {
+      absolute: true,
+      filesOnly: true,
+    });
 
-    await Promise.all(
-      files.map(async (f: string) => {
-        await import(`${process.cwd()}/${f}`);
-      })
+    for (const f of builtinFiles) {
+      if (f.endsWith("cmd.js") || f.endsWith("index.js")) continue;
+      await import(f);
+    }
+
+    const appFiles = await tinyGlob(
+      `${process.cwd()}/${config.nodeEnv === "development" ? "src" : "dist"}/commands/**/*.${
+        config.nodeEnv === "development" ? "ts" : "js"
+      }`,
+      {
+        absolute: true,
+        filesOnly: true,
+      }
     );
+
+    for (const f of appFiles) {
+      await import(f);
+    }
   } catch (err) {
     logger.warn(err.message);
   }
 }
 
-export default cmd;
+export { default as cmd } from "./cmd";
 export type { Cmd } from "./cmd";
