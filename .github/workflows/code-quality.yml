@@ -34,7 +34,7 @@ jobs:
         run: npm ci
 
       - name: Unit Test
-        run: npm test
+        run: npm test -- --coverage
 
       - name: Send Code Coverage To CodeCov
         run: bash <(curl -s https://codecov.io/bash)
