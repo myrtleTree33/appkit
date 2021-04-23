@@ -1,5 +1,5 @@
 export type { Cmd } from "./cmd";
-export type { DB, DBConfig } from "./core";
+export type { DB } from "./core";
 
 export { default as cmd } from "./cmd";
 export { config, logger } from "./core";

@@ -1,4 +1,4 @@
-export type { DB, DBConfig } from "./db";
+export type { DB } from "./db";
 
 export { default as config } from "./config";
 export { default as db } from "./db";

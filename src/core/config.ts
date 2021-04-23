@@ -10,7 +10,7 @@ export interface Config {
   port: number;
 }
 
-function getConfig(): Config {
+export function getConfig(): Config {
   if (!process.env.APPKIT_ENV) {
     process.env.APPKIT_ENV = "development";
   }
@@ -20,13 +20,14 @@ function getConfig(): Config {
   }
 
   const configPath = resolve(process.cwd(), `configs/${process.env.APPKIT_ENV}.env`);
-  const result = config({
+
+  config({
     path: configPath,
   });
 
   return {
     appkitEnv: process.env.APPKIT_ENV || "development",
-    configPath: result?.error ? "" : configPath.replace(`${process.cwd()}/`, ""),
+    configPath: configPath.replace(`${process.cwd()}/`, ""),
     host: process.env.APPKIT_HOST || "0.0.0.0",
     loggerRedactPaths: process.env.APPKIT_LOGGER_REDACT_PATHS
       ? process.env.APPKIT_LOGGER_REDACT_PATHS.split(",")

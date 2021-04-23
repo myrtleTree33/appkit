@@ -12,7 +12,8 @@ describe("logger", () => {
   test("returns the logger for development mode", () => {
     jest.isolateModules(() => {
       process.env.NODE_ENV = "development";
-      const logger = require("./logger").default;
+      const { getLogger } = require("./logger");
+      const logger = getLogger();
 
       expect(logger.level).toBe("debug");
     });
@@ -20,7 +21,8 @@ describe("logger", () => {
 
   test("returns the logger for production mode", () => {
     jest.isolateModules(() => {
-      const logger = require("./logger").default;
+      const { getLogger } = require("./logger");
+      const logger = getLogger();
 
       expect(logger.level).toBe("info");
     });

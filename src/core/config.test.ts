@@ -14,11 +14,12 @@ describe("config", () => {
   test("returns the default value", () => {
     jest.isolateModules(() => {
       delete process.env.NODE_ENV;
-      const config = require("./config").default;
+      const { getConfig } = require("./config");
+      const config = getConfig();
 
       expect(config).toEqual({
         appkitEnv: "development",
-        configPath: "",
+        configPath: "configs/development.env",
         loggerRedactPaths: [],
         host: "0.0.0.0",
         nodeEnv: "development",
@@ -31,8 +32,9 @@ describe("config", () => {
     jest.isolateModules(() => {
       process.env.APPKIT_ENV = "production";
       const configPath = `${__dirname}/__fixtures__/production.env`;
-      const configSpy = jest.spyOn(path, "resolve").mockReturnValueOnce(configPath);
-      const config = require("./config").default;
+      const configSpy = jest.spyOn(path, "resolve").mockReturnValue(configPath);
+      const { getConfig } = require("./config");
+      const config = getConfig();
 
       expect(config).toEqual({
         appkitEnv: "production",
@@ -43,6 +45,7 @@ describe("config", () => {
         port: 5000,
       });
       expect(process.env.APPKIT_DB_URI_PRIMARY).toEqual("mysql://main:whatever@0.0.0.0:33306/main");
+      expect(process.env.APPKIT_DB_POOL_PRIMARY).toEqual("16");
 
       configSpy.mockRestore();
     });
@@ -52,9 +55,11 @@ describe("config", () => {
     jest.isolateModules(() => {
       process.env.APPKIT_ENV = "production";
       process.env.APPKIT_DB_URI_PRIMARY = "db_uri_primary";
+      process.env.APPKIT_DB_POOL_PRIMARY = "32";
       const configPath = `${__dirname}/__fixtures__/production.env`;
-      const configSpy = jest.spyOn(path, "resolve").mockReturnValueOnce(configPath);
-      const config = require("./config").default;
+      const configSpy = jest.spyOn(path, "resolve").mockReturnValue(configPath);
+      const { getConfig } = require("./config");
+      const config = getConfig();
 
       expect(config).toEqual({
         appkitEnv: "production",
@@ -65,18 +70,20 @@ describe("config", () => {
         port: 5000,
       });
       expect(process.env.APPKIT_DB_URI_PRIMARY).toEqual("db_uri_primary");
+      expect(process.env.APPKIT_DB_POOL_PRIMARY).toEqual("32");
 
       configSpy.mockRestore();
     });
   });
 
-  test("returns empty config path if dotenv loading failed", () => {
+  test("returns default config path if dotenv loading failed", () => {
     jest.isolateModules(() => {
-      const config = require("./config").default;
+      const { getConfig } = require("./config");
+      const config = getConfig();
 
       expect(config).toEqual({
         appkitEnv: "development",
-        configPath: "",
+        configPath: "configs/development.env",
         loggerRedactPaths: [],
         host: "0.0.0.0",
         nodeEnv: "test",
