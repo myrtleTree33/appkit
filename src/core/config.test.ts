@@ -41,6 +41,29 @@ test("returns the value from '__fixtures__/production.env'", () => {
       nodeEnv: "test",
       port: 5000,
     });
+    expect(process.env.APPKIT_DB_URI_PRIMARY).toEqual("mysql://main:whatever@0.0.0.0:33306/main");
+
+    configSpy.mockRestore();
+  });
+});
+
+test("overrides the value from '__fixtures__/production.env'", () => {
+  jest.isolateModules(() => {
+    process.env.APPKIT_ENV = "production";
+    process.env.APPKIT_DB_URI_PRIMARY = "db_uri_primary";
+    const configPath = `${__dirname}/__fixtures__/production.env`;
+    const configSpy = jest.spyOn(path, "resolve").mockReturnValueOnce(configPath);
+    const config = require("./config").default;
+
+    expect(config).toEqual({
+      appkitEnv: "production",
+      configPath: configPath.replace(`${process.cwd()}/`, ""),
+      loggerRedactPaths: ["a", "b.c", "d.e.f"],
+      host: "1.1.1.1",
+      nodeEnv: "test",
+      port: 5000,
+    });
+    expect(process.env.APPKIT_DB_URI_PRIMARY).toEqual("db_uri_primary");
 
     configSpy.mockRestore();
   });
