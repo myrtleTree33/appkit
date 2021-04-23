@@ -1,6 +1,8 @@
 import pino, { stdTimeFunctions, redactOptions } from "pino";
 import config from "./config";
 
+export type Logger = pino.Logger;
+
 export function getLogger(): pino.Logger {
   let logger: pino.Logger;
 

@@ -1,4 +1,5 @@
 export type { DB } from "./db";
+export type { Logger } from "./logger";
 
 export { default as config } from "./config";
 export { default as db } from "./db";
