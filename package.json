@@ -71,5 +71,61 @@
     "@types/sade": "^1.7.2",
     "husky": "^6.0.0",
     "rimraf": "^2.7.1"
+  },
+  "babel": {
+    "presets": [
+      [
+        "@babel/preset-env",
+        {
+          "targets": {
+            "node": "current"
+          }
+        }
+      ],
+      "@babel/preset-typescript"
+    ]
+  },
+  "eslintConfig": {
+    "root": true,
+    "parser": "@typescript-eslint/parser",
+    "extends": [
+      "eslint:recommended",
+      "plugin:@typescript-eslint/recommended",
+      "prettier"
+    ],
+    "plugins": [
+      "@typescript-eslint"
+    ],
+    "parserOptions": {
+      "sourceType": "module",
+      "ecmaVersion": 2021
+    },
+    "env": {
+      "es2021": true,
+      "node": true
+    },
+    "rules": {
+      "@typescript-eslint/no-var-requires": 0
+    }
+  },
+  "eslintIgnore": [
+    ".DS_Store",
+    "coverage",
+    "dist",
+    "node_modules"
+  ],
+  "jest": {
+    "testPathIgnorePatterns": [
+      "<rootDir>/dist/",
+      "<rootDir>/node_modules/"
+    ]
+  },
+  "lint-staged": {
+    "*.{ts}": "eslint --fix",
+    "*.{json,md,ts}": "prettier --write"
+  },
+  "prettier": {
+    "printWidth": 120,
+    "tabWidth": 2
   }
 }
