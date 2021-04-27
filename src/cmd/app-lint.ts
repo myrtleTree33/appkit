@@ -1,5 +1,4 @@
-import { series } from "async";
-import { exec } from "child_process";
+import { execSync } from "child_process";
 import { default as cmd } from "./cmd";
 
 cmd
@@ -7,14 +6,11 @@ cmd
   .option("--fix", "Fix the errors/warnings emitted by ESLint/Prettier.")
   .action(async (opts) => {
     if (opts.fix) {
-      return series([
-        () => exec(`npm exec prettier --write ${process.cwd()}`),
-        () => exec(`npm exec eslint --fix --ignore-path .gitignore ${process.cwd()}`),
-      ]);
+      execSync("npm exec prettier -- --write .", { stdio: "inherit" });
+      execSync("npm exec eslint -- --fix --ignore-path .gitignore .", { stdio: "inherit" });
+      return;
     }
 
-    series([
-      () => exec(`npm exec prettier --check ${process.cwd()}`),
-      () => exec(`npm exec eslint --ignore-path .gitignore ${process.cwd()}`),
-    ]);
+    execSync("npm exec prettier -- --check .", { stdio: "inherit" });
+    execSync("npm exec eslint -- --ignore-path .gitignore .", { stdio: "inherit" });
   });
