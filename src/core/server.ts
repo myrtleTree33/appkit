@@ -28,10 +28,7 @@ export class Server {
     this.#listenSocket = _listenSocket;
   }
 
-  any(
-    pattern: RecognizedString,
-    handler: (res: HttpResponse, req: HttpRequest) => void
-  ): TemplatedApp {
+  any(pattern: RecognizedString, handler: (res: HttpResponse, req: HttpRequest) => void): TemplatedApp {
     return this.#server.any(pattern, handler);
   }
 
@@ -41,31 +38,19 @@ export class Server {
     this.#listenSocket = null;
   }
 
-  connect(
-    pattern: RecognizedString,
-    handler: (res: HttpResponse, req: HttpRequest) => void
-  ): TemplatedApp {
+  connect(pattern: RecognizedString, handler: (res: HttpResponse, req: HttpRequest) => void): TemplatedApp {
     return this.#server.connect(pattern, handler);
   }
 
-  del(
-    pattern: RecognizedString,
-    handler: (res: HttpResponse, req: HttpRequest) => void
-  ): TemplatedApp {
+  del(pattern: RecognizedString, handler: (res: HttpResponse, req: HttpRequest) => void): TemplatedApp {
     return this.#server.del(pattern, handler);
   }
 
-  get(
-    pattern: RecognizedString,
-    handler: (res: HttpResponse, req: HttpRequest) => void
-  ): TemplatedApp {
+  get(pattern: RecognizedString, handler: (res: HttpResponse, req: HttpRequest) => void): TemplatedApp {
     return this.#server.get(pattern, handler);
   }
 
-  head(
-    pattern: RecognizedString,
-    handler: (res: HttpResponse, req: HttpRequest) => void
-  ): TemplatedApp {
+  head(pattern: RecognizedString, handler: (res: HttpResponse, req: HttpRequest) => void): TemplatedApp {
     return this.#server.head(pattern, handler);
   }
 
@@ -81,47 +66,27 @@ export class Server {
     return this.#server.numSubscribers(topic);
   }
 
-  options(
-    pattern: RecognizedString,
-    handler: (res: HttpResponse, req: HttpRequest) => void
-  ): TemplatedApp {
+  options(pattern: RecognizedString, handler: (res: HttpResponse, req: HttpRequest) => void): TemplatedApp {
     return this.#server.options(pattern, handler);
   }
 
-  patch(
-    pattern: RecognizedString,
-    handler: (res: HttpResponse, req: HttpRequest) => void
-  ): TemplatedApp {
+  patch(pattern: RecognizedString, handler: (res: HttpResponse, req: HttpRequest) => void): TemplatedApp {
     return this.#server.patch(pattern, handler);
   }
 
-  post(
-    pattern: RecognizedString,
-    handler: (res: HttpResponse, req: HttpRequest) => void
-  ): TemplatedApp {
+  post(pattern: RecognizedString, handler: (res: HttpResponse, req: HttpRequest) => void): TemplatedApp {
     return this.#server.post(pattern, handler);
   }
 
-  publish(
-    topic: RecognizedString,
-    message: RecognizedString,
-    isBinary?: boolean,
-    compress?: boolean
-  ): boolean {
+  publish(topic: RecognizedString, message: RecognizedString, isBinary?: boolean, compress?: boolean): boolean {
     return this.#server.publish(topic, message, isBinary, compress);
   }
 
-  put(
-    pattern: RecognizedString,
-    handler: (res: HttpResponse, req: HttpRequest) => void
-  ): TemplatedApp {
+  put(pattern: RecognizedString, handler: (res: HttpResponse, req: HttpRequest) => void): TemplatedApp {
     return this.#server.put(pattern, handler);
   }
 
-  trace(
-    pattern: RecognizedString,
-    handler: (res: HttpResponse, req: HttpRequest) => void
-  ): TemplatedApp {
+  trace(pattern: RecognizedString, handler: (res: HttpResponse, req: HttpRequest) => void): TemplatedApp {
     return this.#server.trace(pattern, handler);
   }
 

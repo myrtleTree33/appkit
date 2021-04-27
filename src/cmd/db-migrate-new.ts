@@ -23,9 +23,7 @@ cmd
       await writeFileSync(fn, prettifiedText, { encoding: "utf8" });
       await renameSync(fn, fn.replace(".js", ".cjs"));
 
-      logger.info(
-        `Successfully created '${fn?.replace(process.cwd() + "/", "").replace(".js", ".cjs")}'!`
-      );
+      logger.info(`Successfully created '${fn?.replace(process.cwd() + "/", "").replace(".js", ".cjs")}'!`);
     } catch (err) {
       logger.error(err);
       process.exit(1);
