@@ -3,7 +3,7 @@ import type { us_listen_socket } from "uWebSockets.js";
 import { config, logger, server } from "../core";
 import { default as cmd } from "./cmd";
 
-cmd.command("app:server", "Start the HTTP server.").action(() => {
+cmd.command("server", "Start the HTTP server.").action(() => {
   server.listen(config.host, config.port, (listenSocket: us_listen_socket) => {
     if (listenSocket) {
       server.listenSocket = listenSocket;

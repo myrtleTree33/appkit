@@ -7,7 +7,7 @@ async function sleep(millis: number) {
   return new Promise((resolve) => setTimeout(resolve, millis));
 }
 
-cmd.command("app:setup", "Setup the `docker-compose` cluster with the databases migrated/seeded.").action(async () => {
+cmd.command("setup", "Setup the `docker-compose` cluster with the databases migrated/seeded.").action(async () => {
   await dockerCompose.upAll({ cwd: process.cwd(), log: true });
 
   try {

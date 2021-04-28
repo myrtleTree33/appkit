@@ -1,6 +1,6 @@
 import { config, logger, server } from "../core";
 import { default as cmd } from "./cmd";
-cmd.command("app:server", "Start the HTTP server.").action(() => {
+cmd.command("server", "Start the HTTP server.").action(() => {
     server.listen(config.host, config.port, (listenSocket) => {
         if (listenSocket) {
             server.listenSocket = listenSocket;

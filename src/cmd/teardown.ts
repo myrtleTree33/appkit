@@ -2,7 +2,7 @@ import dockerCompose from "docker-compose";
 
 import { default as cmd } from "./cmd";
 
-cmd.command("app:teardown", "Destroy the `docker-compose` cluster.").action(async () => {
+cmd.command("teardown", "Destroy the `docker-compose` cluster.").action(async () => {
   try {
     await dockerCompose.down({
       cwd: process.cwd(),
