@@ -8,9 +8,8 @@ An opinionated productive web framework to supercharge your feature development.
 
 cmd
 
-- app:check - inline eslint/prettier fix (with lint-staged)
-- app:test - run unit test with jest
-- app:worker - add bullmq (support development mode with app:dev)
+- test:unit - run unit test with jest
+- worker - add bullmq (support development mode with app:dev)
 - cfg:enc - encrypt/append config value into <APPKIT_ENV>.env
 - cfg:dec - decrypt config value from <APPKIT_ENV>.env
 - db:new - add new database
