@@ -15,8 +15,8 @@
     "prebuild": "npm run clean",
     "build": "tsc",
     "clean": "rimraf ./dist",
-    "lint": "prettier --check . && eslint --ignore-path .gitignore .",
-    "lint:fix": "prettier --write . && eslint --fix --ignore-path .gitignore .",
+    "lint": "prettier --check . && eslint .",
+    "lint:fix": "prettier --write . && eslint --fix .",
     "prepare": "husky install",
     "test": "jest"
   },
