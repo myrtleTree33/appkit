@@ -1,6 +1,6 @@
 import nodemon from "nodemon";
 import { default as cmd } from "./cmd";
-cmd.command("app:dev", "Start the server/worker in development mode.").action(() => {
+cmd.command("start", "Start the server/worker in development mode.").action(() => {
     const server = nodemon({
         delay: 1,
         env: {
