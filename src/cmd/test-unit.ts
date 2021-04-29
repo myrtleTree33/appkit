@@ -21,7 +21,7 @@ cmd
   )
   .option("--watch", "Watch files for changes and rerun tests related to changed files.", false)
   .action(async (opts) => {
-    const args = [];
+    const args = ["--passWithNoTests"];
 
     if (opts.ci) args.push("--ci");
     if (opts.coverage) args.push("--coverage");

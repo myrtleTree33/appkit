@@ -8,7 +8,7 @@ cmd
     .option("-u, --updateSnapshot", `Use this flag to re-record snapshots. Can be used together with a test suite pattern or with \`--testNamePattern\` to re-record snapshot for test matching the pattern.`, false)
     .option("--watch", "Watch files for changes and rerun tests related to changed files.", false)
     .action(async (opts) => {
-    const args = [];
+    const args = ["--passWithNoTests"];
     if (opts.ci)
         args.push("--ci");
     if (opts.coverage)
