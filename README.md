@@ -8,7 +8,6 @@ An opinionated productive web framework to supercharge your feature development.
 
 cmd
 
-- test:unit - run unit test with jest
 - worker - add bullmq (support development mode with app:dev)
 - cfg:enc - encrypt/append config value into <APPKIT_ENV>.env
 - cfg:dec - decrypt config value from <APPKIT_ENV>.env
