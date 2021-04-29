@@ -102,15 +102,21 @@ async function getServer(): Promise<Server> {
   const server = new Server();
 
   try {
-    const files = await tinyGlob(`${process.cwd()}/src/routes/**/*.{ts}`);
+    const tsFiles = await tinyGlob(`${process.cwd()}/src/routes/**/*.{ts}`);
 
-    await Promise.all(
-      files.map(async (f: string) => {
-        await import(`${process.cwd()}/${f}`);
-      })
-    );
+    await Promise.all([
+      tsFiles.map(async (f: string) => {
+        const mod = await import(`${process.cwd()}/${f}`);
+
+        for (const key of Object.keys(mod)) {
+          if (typeof mod[key] === "function") {
+            mod[key]();
+          }
+        }
+      }),
+    ]);
   } catch (err) {
-    logger.warn(err.message);
+    logger.error(err.message);
   }
 
   return server;

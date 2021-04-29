@@ -69,13 +69,20 @@ export class Server {
 async function getServer() {
     const server = new Server();
     try {
-        const files = await tinyGlob(`${process.cwd()}/src/routes/**/*.{ts}`);
-        await Promise.all(files.map(async (f) => {
-            await import(`${process.cwd()}/${f}`);
-        }));
+        const tsFiles = await tinyGlob(`${process.cwd()}/src/routes/**/*.{ts}`);
+        await Promise.all([
+            tsFiles.map(async (f) => {
+                const mod = await import(`${process.cwd()}/${f}`);
+                for (const key of Object.keys(mod)) {
+                    if (typeof mod[key] === "function") {
+                        mod[key]();
+                    }
+                }
+            }),
+        ]);
     }
     catch (err) {
-        logger.warn(err.message);
+        logger.error(err.message);
     }
     return server;
 }
