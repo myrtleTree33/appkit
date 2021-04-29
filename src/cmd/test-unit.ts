@@ -29,5 +29,5 @@ cmd
     if (opts.updateSnapshot || opts.u) args.push("--updateSnapshot");
     if (opts.watch) args.push("--watch");
 
-    // execSync(`npm exec jest -- ${args.join(" ")}`, { stdio: "inherit" });
+    execSync(`npm exec jest -- ${args.join(" ")}`, { stdio: "inherit" });
   });

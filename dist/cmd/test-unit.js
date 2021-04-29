@@ -1,3 +1,4 @@
+import { execSync } from "child_process";
 import { default as cmd } from "./cmd";
 cmd
     .command("test:unit", "Run unit tests with Jest.")
@@ -18,5 +19,5 @@ cmd
         args.push("--updateSnapshot");
     if (opts.watch)
         args.push("--watch");
-    // execSync(`npm exec jest -- ${args.join(" ")}`, { stdio: "inherit" });
+    execSync(`npm exec jest -- ${args.join(" ")}`, { stdio: "inherit" });
 });
