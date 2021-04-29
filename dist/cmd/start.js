@@ -1,17 +1,27 @@
 import nodemon from "nodemon";
 import { default as cmd } from "./cmd";
-cmd.command("start", "Start the server/worker in development mode.").action(() => {
+const defaultPort = 9229;
+cmd
+    .command("start", "Start the server/worker in development mode.")
+    .option("--inspect", "Start the V8 inspector on the specified port.", defaultPort)
+    .action((opts) => {
+    const inspectPort = parseInt(opts.inspect);
     const server = nodemon({
         delay: 1,
         env: {
             NODE_ENV: "development",
+            ...(opts.inspect
+                ? {
+                    NODE_OPTIONS: `--inspect=${isNaN(inspectPort) ? defaultPort : inspectPort}`,
+                }
+                : {}),
         },
         exec: "./app server",
-        ext: "env,json,ts",
+        ext: "env,json,svelte,ts,tsx,vue",
         events: {
             start: "clear",
         },
-        ignore: [".git", "node_modules", "*.test.ts", "*.spec.ts"],
+        ignore: [".git", "node_modules", "*.test.ts", "*.test.tsx", "*.spec.ts", "*.spec.tsx"],
         pollingInterval: 500,
         watch: ["configs", "src"],
     });

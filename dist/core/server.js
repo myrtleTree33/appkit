@@ -6,9 +6,11 @@ export class Server {
     constructor() {
         this.#listenSocket = null;
         this.#server = App({});
+        this.#vite = null;
     }
     #listenSocket;
     #server;
+    #vite;
     get listenSocket() {
         return this.#listenSocket;
     }
