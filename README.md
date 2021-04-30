@@ -16,7 +16,7 @@ cmd
 core
 
 - support file based routing
-- integrate with vitejs to support react/vue/svelte SSR + service worker
+- integrate with vitejs to support svelte SSR + service worker
 - support i18n
 - support mailer
 - support casbin

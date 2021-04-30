@@ -4,8 +4,8 @@ import { config, logger, server } from "../core";
 import { default as cmd } from "./cmd";
 
 cmd.command("server", "Start the HTTP server.").action(async () => {
-  function handler() {
-    server.close();
+  async function handler() {
+    await server.close();
   }
 
   try {
