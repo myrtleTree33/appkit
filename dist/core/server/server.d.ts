@@ -1,4 +1,4 @@
-import { HttpRequest, HttpResponse, RecognizedString, TemplatedApp, WebSocketBehavior, us_listen_socket } from "uWebSockets.js";
+import type { HttpRequest, HttpResponse, RecognizedString, TemplatedApp, WebSocketBehavior, us_listen_socket } from "uWebSockets.js";
 export declare class Server {
     #private;
     constructor();

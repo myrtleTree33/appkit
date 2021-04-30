@@ -1,5 +1,4 @@
-import tinyGlob from "tiny-glob";
-import uWebSockets, {
+import type {
   HttpRequest,
   HttpResponse,
   RecognizedString,
@@ -7,9 +6,11 @@ import uWebSockets, {
   WebSocketBehavior,
   us_listen_socket,
 } from "uWebSockets.js";
-import { ViteDevServer } from "vite";
-import { default as logger } from "./logger";
 
+import tinyGlob from "tiny-glob";
+import { ViteDevServer } from "vite";
+import { default as logger } from "../logger";
+import uWebSockets from "uWebSockets.js";
 const { App, us_listen_socket_close } = uWebSockets;
 
 export class Server {
@@ -106,13 +107,13 @@ async function getServer(): Promise<Server> {
 
     await Promise.all([
       tsFiles.map(async (f: string) => {
-        const mod = await import(`${process.cwd()}/${f}`);
+        await import(`${process.cwd()}/${f}`);
+        // const mod = await import(`${process.cwd()}/${f}`);
 
-        for (const key of Object.keys(mod)) {
-          if (typeof mod[key] === "function") {
-            mod[key]();
-          }
-        }
+        // for (const key of Object.keys(mod)) {
+        //   if (typeof mod[key] === "function") {
+        //   }
+        // }
       }),
     ]);
   } catch (err) {

@@ -1,6 +1,6 @@
 import tinyGlob from "tiny-glob";
+import { default as logger } from "../logger";
 import uWebSockets from "uWebSockets.js";
-import { default as logger } from "./logger";
 const { App, us_listen_socket_close } = uWebSockets;
 export class Server {
     constructor() {
@@ -72,12 +72,12 @@ async function getServer() {
         const tsFiles = await tinyGlob(`${process.cwd()}/src/routes/**/*.{ts}`);
         await Promise.all([
             tsFiles.map(async (f) => {
-                const mod = await import(`${process.cwd()}/${f}`);
-                for (const key of Object.keys(mod)) {
-                    if (typeof mod[key] === "function") {
-                        mod[key]();
-                    }
-                }
+                await import(`${process.cwd()}/${f}`);
+                // const mod = await import(`${process.cwd()}/${f}`);
+                // for (const key of Object.keys(mod)) {
+                //   if (typeof mod[key] === "function") {
+                //   }
+                // }
             }),
         ]);
     }
