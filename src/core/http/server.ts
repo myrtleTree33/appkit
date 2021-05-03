@@ -12,7 +12,6 @@ import { getRouteFromFilename, srcRoutes } from "./util";
 declare module "uWebSockets.js" {
   interface HttpResponse {
     isAborted: boolean;
-    isRendered: boolean;
     json: (obj: any, status?: string | number) => void;
   }
 
@@ -107,16 +106,14 @@ export class Server {
                 res.isAborted = false;
                 res.onAborted(() => (res.isAborted = true));
 
-                res.isRendered = false;
                 res.__proto__.json = function (obj: any, status = "200") {
                   if (this.isAborted) return;
 
-                  res
-                    .writeStatus(status.toString())
-                    .writeHeader("Content-Type", "application/json")
-                    .end(JSON.stringify(obj));
-
-                  res.isRendered = true;
+                  this.cork(() => {
+                    this.writeStatus(status.toString())
+                      .writeHeader("Content-Type", "application/json")
+                      .end(JSON.stringify(obj));
+                  });
                 };
 
                 if (mod[key].constructor.name === "AsyncFunction") {

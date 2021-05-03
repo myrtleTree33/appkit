@@ -2,7 +2,6 @@ import type { HttpRequest, HttpResponse, RecognizedString, TemplatedApp, us_list
 declare module "uWebSockets.js" {
     interface HttpResponse {
         isAborted: boolean;
-        isRendered: boolean;
         json: (obj: any, status?: string | number) => void;
     }
     interface HttpRequest {
