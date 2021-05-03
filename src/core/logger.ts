@@ -1,11 +1,12 @@
 import pino, { stdTimeFunctions, redactOptions } from "pino";
-import config from "./config";
+import { getConfig } from "./config";
 
 export type Logger = pino.Logger;
 
 export function getLogger(): pino.Logger {
   let logger: pino.Logger;
 
+  const config = getConfig();
   const redact: redactOptions = {
     censor: "[redacted]",
     paths: config.loggerRedactPaths,

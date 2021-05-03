@@ -1,5 +1,4 @@
-import { db, logger } from "../core";
-import { default as cmd } from "./cmd";
+import { cmd, db, logger } from "..";
 
 cmd
   .command("db:migrate:status", "Show the list of completed and pending migrations.")

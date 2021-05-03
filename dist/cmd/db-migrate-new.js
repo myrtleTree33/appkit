@@ -1,8 +1,7 @@
 import { readFileSync, renameSync, writeFileSync } from "node:fs";
 import prettier from "prettier";
 const { format, resolveConfig } = prettier;
-import { db, logger } from "../core";
-import { default as cmd } from "./cmd";
+import { cmd, db, logger } from "..";
 cmd
     .command("db:migrate:new <name>", "Generate a new database migration file.")
     .example("db:migrate:new create_users")

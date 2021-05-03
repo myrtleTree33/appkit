@@ -1,13 +1,14 @@
-import { config, logger, server } from "../core";
-import { default as cmd } from "./cmd";
+import { getServer } from "../core/http/server";
+import { cmd, config, logger } from "..";
 cmd.command("server", "Start the HTTP server.").action(async () => {
+    const server = await getServer();
     async function handler() {
         await server.close();
     }
     try {
         process.on("SIGINT", handler);
         process.on("SIGTERM", handler);
-        await server.listen(config.host, config.port, (listenSocket) => {
+        server.listen(config.host, config.port, (listenSocket) => {
             if (listenSocket) {
                 server.listenSocket = listenSocket;
                 logger.info(`Server is listening on http://${config.host}:${config.port}...`);

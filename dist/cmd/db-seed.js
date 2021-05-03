@@ -1,5 +1,4 @@
-import { db, logger } from "../core";
-import { default as cmd } from "./cmd";
+import { cmd, db, logger } from "..";
 cmd
     .command("db:seed", "Seed the database with minimal data to start the local development work.")
     .option("-t, --target", "The target database to work with.", "primary")

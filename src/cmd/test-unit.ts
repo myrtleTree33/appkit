@@ -1,5 +1,5 @@
 import { execSync } from "child_process";
-import { default as cmd } from "./cmd";
+import { cmd } from "..";
 
 cmd
   .command("test:unit", "Run unit tests with Jest.")

@@ -1,6 +1,8 @@
 import { config } from "dotenv";
 import { resolve } from "path";
 
+let cfg: Config;
+
 export interface Config {
   appkitEnv: string;
   configPath: string;
@@ -11,6 +13,8 @@ export interface Config {
 }
 
 export function getConfig(): Config {
+  if (cfg) return cfg;
+
   if (!process.env.APPKIT_ENV) {
     process.env.APPKIT_ENV = "development";
   }
@@ -25,7 +29,7 @@ export function getConfig(): Config {
     path: configPath,
   });
 
-  return {
+  cfg = {
     appkitEnv: process.env.APPKIT_ENV || "development",
     configPath: configPath.replace(`${process.cwd()}/`, ""),
     host: process.env.APPKIT_HOST || "0.0.0.0",
@@ -33,6 +37,6 @@ export function getConfig(): Config {
     nodeEnv: process.env.NODE_ENV || "development",
     port: parseInt(process.env.APPKIT_PORT || "") || 3000,
   };
-}
 
-export default getConfig();
+  return cfg;
+}

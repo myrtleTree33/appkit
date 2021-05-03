@@ -46,5 +46,3 @@ export function getDB(): DB {
 
   return db;
 }
-
-export default getDB();

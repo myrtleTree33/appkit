@@ -1,8 +1,7 @@
 import { dirname } from "path";
 import tinyGlob from "tiny-glob";
 import { fileURLToPath } from "url";
-
-import { config, logger } from "../core";
+import { config, logger } from "..";
 
 export async function loadAppCommands(): Promise<void> {
   try {
@@ -35,5 +34,5 @@ export async function loadAppCommands(): Promise<void> {
   }
 }
 
-export { default as cmd } from "./cmd";
+export { getCmd } from "./cmd";
 export type { Cmd } from "./cmd";

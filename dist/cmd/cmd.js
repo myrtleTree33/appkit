@@ -1,5 +1,4 @@
 import sade from "sade";
-function getCmd() {
+export function getCmd() {
     return sade("./app");
 }
-export default getCmd();

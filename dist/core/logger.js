@@ -1,7 +1,8 @@
 import pino, { stdTimeFunctions } from "pino";
-import config from "./config";
+import { getConfig } from "./config";
 export function getLogger() {
     let logger;
+    const config = getConfig();
     const redact = {
         censor: "[redacted]",
         paths: config.loggerRedactPaths,

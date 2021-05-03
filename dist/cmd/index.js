@@ -1,7 +1,7 @@
 import { dirname } from "path";
 import tinyGlob from "tiny-glob";
 import { fileURLToPath } from "url";
-import { config, logger } from "../core";
+import { config, logger } from "..";
 export async function loadAppCommands() {
     try {
         const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -26,4 +26,4 @@ export async function loadAppCommands() {
         logger.warn(err.message);
     }
 }
-export { default as cmd } from "./cmd";
+export { getCmd } from "./cmd";

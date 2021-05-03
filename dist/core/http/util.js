@@ -1,11 +1,10 @@
-import { config } from "..";
+import { getConfig } from "../config";
+const config = getConfig();
 export const srcRoutes = `${process.cwd()}/${config.nodeEnv === "development" ? "src" : "dist"}/routes`;
-export async function useMiddleware(res, req, middleware) {
+export async function useMiddleware(req, res, middleware) {
     for (let i = 0; i < middleware.length; i++) {
-        if (res.isAborted) {
+        if (res.isAborted || !(await middleware[i](req, res)))
             break;
-        }
-        await middleware[i](res, req);
     }
 }
 export function getRouteFromFilename(fn) {

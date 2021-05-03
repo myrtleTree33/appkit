@@ -1,14 +1,12 @@
-import dockerCompose from "docker-compose";
-
-import { db, logger } from "../core";
-import { default as cmd } from "./cmd";
+import { execSync } from "child_process";
+import { cmd, db, logger } from "..";
 
 async function sleep(millis: number) {
   return new Promise((resolve) => setTimeout(resolve, millis));
 }
 
 cmd.command("setup", "Setup the `docker-compose` cluster with the databases migrated/seeded.").action(async () => {
-  await dockerCompose.upAll({ cwd: process.cwd(), log: true });
+  execSync("docker compose up -d", { stdio: "inherit" });
 
   try {
     for (const dbName in db) {

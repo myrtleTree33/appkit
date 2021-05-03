@@ -1,5 +1,4 @@
-import { db, logger } from "../core";
-import { default as cmd } from "./cmd";
+import { cmd, db, logger } from "..";
 
 cmd
   .command("db:rollback", "Rollback the database schema to previous version.")

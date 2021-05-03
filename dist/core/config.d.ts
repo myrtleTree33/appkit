@@ -7,5 +7,3 @@ export interface Config {
     port: number;
 }
 export declare function getConfig(): Config;
-declare const _default: Config;
-export default _default;

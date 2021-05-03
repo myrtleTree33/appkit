@@ -4,5 +4,3 @@ export interface DB {
     [key: string]: Knex | null;
 }
 export declare function getDB(): DB;
-declare const _default: DB;
-export default _default;

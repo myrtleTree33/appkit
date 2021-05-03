@@ -1,6 +1,5 @@
 import { randomBytes } from "crypto";
-import { logger } from "../core";
-import { default as cmd } from "./cmd";
+import { cmd, logger } from "..";
 
 cmd
   .command(

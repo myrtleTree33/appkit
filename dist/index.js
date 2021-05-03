@@ -1,6 +1,11 @@
-export { cmd } from "./cmd";
-export { db, config, logger } from "./core";
-import { cmd, loadAppCommands } from "./cmd";
+import { getConfig } from "./core/config";
+export const config = getConfig();
+import { getLogger } from "./core/logger";
+export const logger = getLogger();
+import { getDB } from "./core/db";
+export const db = getDB();
+import { getCmd, loadAppCommands } from "./cmd";
+export const cmd = getCmd();
 export async function bootstrap() {
     await loadAppCommands();
     cmd.parse(process.argv);

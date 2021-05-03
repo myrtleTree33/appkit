@@ -1,6 +1,5 @@
-import { logger } from "../core";
 import nodemon from "nodemon";
-import { default as cmd } from "./cmd";
+import { cmd, logger } from "..";
 const defaultPort = 9229;
 cmd
     .command("start", "Start the server/worker in development mode.")

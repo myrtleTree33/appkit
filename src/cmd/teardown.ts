@@ -1,14 +1,9 @@
-import dockerCompose from "docker-compose";
-
-import { default as cmd } from "./cmd";
+import { execSync } from "child_process";
+import { cmd } from "..";
 
 cmd.command("teardown", "Destroy the `docker-compose` cluster.").action(async () => {
   try {
-    await dockerCompose.down({
-      cwd: process.cwd(),
-      log: true,
-      commandOptions: ["--remove-orphans"],
-    });
+    execSync("docker compose down --remove-orphans", { stdio: "inherit" });
   } catch (err) {
     process.exit(1);
   }
