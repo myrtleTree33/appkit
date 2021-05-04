@@ -12,10 +12,12 @@ import { getRouteFromFilename, srcRoutes } from "./util";
 declare module "uWebSockets.js" {
   interface HttpResponse {
     isAborted: boolean;
+    // eslint-disable-next-line
     json: (obj: any, status?: string | number) => void;
   }
 
   interface HttpRequest {
+    // eslint-disable-next-line
     ctx: { [key: string]: any };
   }
 
@@ -106,6 +108,7 @@ export class Server {
                 res.isAborted = false;
                 res.onAborted(() => (res.isAborted = true));
 
+                // eslint-disable-next-line
                 res.__proto__.json = function (obj: any, status = "200") {
                   if (this.isAborted) return;
 
@@ -127,6 +130,10 @@ export class Server {
           }
         }),
       ]);
+
+      this.#server.any("/*", (res: HttpResponse) => {
+        res.writeStatus("404").end("");
+      });
     } catch (err) {
       logger.error(err);
     }

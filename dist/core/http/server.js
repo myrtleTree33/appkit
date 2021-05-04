@@ -59,6 +59,7 @@ export class Server {
                                 // Setup HttpResponse helpers.
                                 res.isAborted = false;
                                 res.onAborted(() => (res.isAborted = true));
+                                // eslint-disable-next-line
                                 res.__proto__.json = function (obj, status = "200") {
                                     if (this.isAborted)
                                         return;
@@ -78,6 +79,9 @@ export class Server {
                     }
                 }),
             ]);
+            this.#server.any("/*", (res) => {
+                res.writeStatus("404").end("");
+            });
         }
         catch (err) {
             logger.error(err);
