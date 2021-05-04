@@ -1,3 +1,5 @@
+import type { Logger } from "./logger";
+
 describe("logger", () => {
   const OLD_ENV = process.env;
 
@@ -13,7 +15,7 @@ describe("logger", () => {
     jest.isolateModules(() => {
       process.env.NODE_ENV = "development";
       const { getLogger } = require("./logger");
-      const logger = getLogger();
+      const logger: Logger = getLogger();
 
       expect(logger.level).toBe("debug");
     });
@@ -22,7 +24,7 @@ describe("logger", () => {
   test("returns the logger for production mode", () => {
     jest.isolateModules(() => {
       const { getLogger } = require("./logger");
-      const logger = getLogger();
+      const logger: Logger = getLogger();
 
       expect(logger.level).toBe("info");
     });

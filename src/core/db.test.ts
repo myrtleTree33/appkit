@@ -1,4 +1,5 @@
 import { resolve } from "path";
+import type { DB } from "./db";
 
 describe("db", () => {
   const OLD_ENV = process.env;
@@ -19,7 +20,7 @@ describe("db", () => {
         "postgresql://main:whatever@0.0.0.0:5432/main?sslmode=disable&connect_timeout=5";
       process.env.APPKIT_DB_POOL_SECONDARY = "32";
       const { getDB } = require("./db");
-      const db = getDB();
+      const db: DB = getDB();
 
       expect(db["primary"].client.config).toEqual({
         client: "mysql2",

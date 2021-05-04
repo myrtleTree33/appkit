@@ -3,12 +3,20 @@ import { readFileSync, rmSync } from "fs";
 import { resolve } from "path";
 import { cmd } from "..";
 
-cmd.command("build", "Compile the Typescript source code into Javascript for production deployment.").action(() => {
-  const tsconfig = JSON.parse(readFileSync(`${process.cwd()}/tsconfig.json`, "utf-8"));
+cmd
+  .command("build", "Compile the TS source code into JS for production deployment.")
+  .option("--noEmit", "Do not emit JS files, only for typechecking.")
+  .action((opts) => {
+    const tsconfig = JSON.parse(readFileSync(`${process.cwd()}/tsconfig.json`, "utf-8"));
 
-  if (tsconfig.compilerOptions?.outDir) {
-    rmSync(resolve(`${process.cwd()}/${tsconfig.compilerOptions?.outDir}`), { recursive: true, force: true });
-  }
+    if (opts.noEmit) {
+      execSync("npm exec tsc -- --noEmit", { stdio: "inherit" });
+      return;
+    }
 
-  execSync("npm exec tsc", { stdio: "inherit" });
-});
+    if (tsconfig.compilerOptions?.outDir) {
+      rmSync(resolve(`${process.cwd()}/${tsconfig.compilerOptions?.outDir}`), { recursive: true, force: true });
+    }
+
+    execSync("npm exec tsc", { stdio: "inherit" });
+  });

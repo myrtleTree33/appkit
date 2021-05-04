@@ -6,8 +6,8 @@ import { createServer } from "vite";
 import uWebSockets from "uWebSockets.js";
 const { App, us_listen_socket_close } = uWebSockets;
 
-import { config, logger } from "../..";
-import { getRouteFromFilename, srcRoutes } from "./util";
+import { config, logger } from "../globals";
+import { getRouteFromFilename } from "./util";
 
 declare module "uWebSockets.js" {
   interface HttpResponse {
@@ -38,7 +38,6 @@ export interface Route {
 }
 
 export class Server {
-  #timestamp: string;
   #listenSocket: us_listen_socket | null;
   #server: TemplatedApp;
   #vite: ViteDevServer | null;
@@ -49,7 +48,6 @@ export class Server {
     this.#server = App();
     this.#vite = null;
     this.#routes = {};
-    this.#timestamp = "";
   }
 
   public get listenSocket(): us_listen_socket | null {
@@ -62,6 +60,10 @@ export class Server {
 
   public get routes(): Routes {
     return this.#routes;
+  }
+
+  address(): string {
+    return `${config.host}:${config.port}`;
   }
 
   async close(): Promise<void> {
@@ -79,7 +81,7 @@ export class Server {
   async initRoutes(): Promise<void> {
     try {
       const files = await tinyGlob(
-        `${srcRoutes}/**/!(*.spec|*.test).${config.nodeEnv === "development" ? "{md,mdx,ts,svelte}" : "{js}"}`,
+        `${config.routesPath}/**/!(*.spec|*.test).${config.nodeEnv === "development" ? "{md,mdx,ts,svelte}" : "{js}"}`,
         {
           absolute: true,
           filesOnly: true,
@@ -131,10 +133,18 @@ export class Server {
         }),
       ]);
 
-      this.#server.any("/*", (res: HttpResponse) => {
+      this.#server.any("/*", (res: HttpResponse, req: HttpRequest) => {
+        // This is to fix uwebsockets.js treats trailing slash as different URL but '/' should not be treated as the
+        // same.
+        if (req.getUrl() === "/") {
+          req.setYield(true);
+          return;
+        }
+
         res.writeStatus("404").end("");
       });
     } catch (err) {
+      if (config.nodeEnv === "test") return;
       logger.error(err);
     }
   }

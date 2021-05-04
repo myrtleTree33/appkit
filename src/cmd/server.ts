@@ -1,5 +1,5 @@
 import type { us_listen_socket } from "uWebSockets.js";
-import { getServer } from "../core/http/server";
+import { getServer } from "../core/server";
 import { cmd, config, logger } from "..";
 
 cmd.command("server", "Start the HTTP server.").action(async () => {

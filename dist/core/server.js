@@ -2,17 +2,15 @@ import tinyGlob from "tiny-glob";
 import { createServer } from "vite";
 import uWebSockets from "uWebSockets.js";
 const { App, us_listen_socket_close } = uWebSockets;
-import { config, logger } from "../..";
-import { getRouteFromFilename, srcRoutes } from "./util";
+import { config, logger } from "../globals";
+import { getRouteFromFilename } from "./util";
 export class Server {
     constructor() {
         this.#listenSocket = null;
         this.#server = App();
         this.#vite = null;
         this.#routes = {};
-        this.#timestamp = "";
     }
-    #timestamp;
     #listenSocket;
     #server;
     #vite;
@@ -25,6 +23,9 @@ export class Server {
     }
     get routes() {
         return this.#routes;
+    }
+    address() {
+        return `${config.host}:${config.port}`;
     }
     async close() {
         if (!this.#listenSocket)
@@ -39,7 +40,7 @@ export class Server {
     }
     async initRoutes() {
         try {
-            const files = await tinyGlob(`${srcRoutes}/**/!(*.spec|*.test).${config.nodeEnv === "development" ? "{md,mdx,ts,svelte}" : "{js}"}`, {
+            const files = await tinyGlob(`${config.routesPath}/**/!(*.spec|*.test).${config.nodeEnv === "development" ? "{md,mdx,ts,svelte}" : "{js}"}`, {
                 absolute: true,
                 filesOnly: true,
             });
@@ -79,11 +80,19 @@ export class Server {
                     }
                 }),
             ]);
-            this.#server.any("/*", (res) => {
+            this.#server.any("/*", (res, req) => {
+                // This is to fix uwebsockets.js treats trailing slash as different URL but '/' should not be treated as the
+                // same.
+                if (req.getUrl() === "/") {
+                    req.setYield(true);
+                    return;
+                }
                 res.writeStatus("404").end("");
             });
         }
         catch (err) {
+            if (config.nodeEnv === "test")
+                return;
             logger.error(err);
         }
     }

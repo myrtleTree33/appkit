@@ -29,6 +29,7 @@ export declare class Server {
     get listenSocket(): us_listen_socket | null;
     set listenSocket(_listenSocket: us_listen_socket | null);
     get routes(): Routes;
+    address(): string;
     close(): Promise<void>;
     init(): Promise<void>;
     initRoutes(): Promise<void>;
