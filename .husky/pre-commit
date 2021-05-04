@@ -3,5 +3,5 @@
 . "$(dirname "$0")/_/husky.sh"
 
 npx lint-staged
-npm run build -- --noEmit
+npm run build
 npm test
