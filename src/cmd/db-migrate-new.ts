@@ -1,4 +1,4 @@
-import { readFileSync, renameSync, writeFileSync } from "fs";
+import { readFileSync, writeFileSync } from "fs";
 import prettier from "prettier";
 
 const { format, resolveConfig } = prettier;
@@ -20,9 +20,8 @@ cmd
       const prettierConfig = await resolveConfig(process.cwd());
       const prettifiedText = format(text, { parser: "typescript", ...prettierConfig } || undefined);
       await writeFileSync(fn, prettifiedText, { encoding: "utf8" });
-      await renameSync(fn, fn.replace(".js", ".cjs"));
 
-      logger.info(`Successfully created '${fn?.replace(process.cwd() + "/", "").replace(".js", ".cjs")}'!`);
+      logger.info(`Successfully created '${fn?.replace(process.cwd() + "/", "")}'!`);
     } catch (err) {
       logger.error(err);
       process.exit(1);

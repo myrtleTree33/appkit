@@ -27,7 +27,6 @@ export function getConfig(): Config {
   }
 
   const configPath = resolve(process.cwd(), `configs/${process.env.APPKIT_ENV}.env`);
-
   const tsconfig = JSON.parse(readFileSync(`${process.cwd()}/tsconfig.json`, "utf-8"));
   const entryRoot = process.env.NODE_ENV === "development" ? "src" : tsconfig?.outDir || "dist";
 

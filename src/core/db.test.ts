@@ -12,6 +12,39 @@ describe("db", () => {
     process.env = OLD_ENV;
   });
 
+  test("uses the default DB config", () => {
+    jest.isolateModules(() => {
+      process.env.NODE_ENV = "development";
+      process.env.APPKIT_DB_URI_PRIMARY = "mysql://main:whatever@0.0.0.0:3306/main";
+      process.env.APPKIT_DB_POOL_PRIMARY = "16";
+      const { getDB } = require("./db");
+      const db: DB = getDB();
+
+      expect(db["primary"].client.config).toEqual({
+        client: "mysql2",
+        connection: {
+          database: "main",
+          host: "0.0.0.0",
+          port: "3306",
+          user: "main",
+          password: "whatever",
+        },
+        pool: { min: 16, max: 16 },
+        migrations: {
+          directory: "src/db/migrate/primary",
+          extension: "ts",
+          tableName: "schema_migrations",
+          loadExtensions: [".ts"],
+        },
+        seeds: {
+          directory: "src/db/seed/primary",
+          extension: "ts",
+          loadExtensions: [".ts"],
+        },
+      });
+    });
+  });
+
   test("uses the DB config from the environment variables", () => {
     jest.isolateModules(() => {
       process.env.APPKIT_DB_URI_PRIMARY = "mysql://main:whatever@0.0.0.0:3306/main";
@@ -33,13 +66,15 @@ describe("db", () => {
         },
         pool: { min: 16, max: 16 },
         migrations: {
-          directory: resolve(process.cwd(), "db/migrate/primary"),
+          directory: "dist/db/migrate/primary",
+          extension: "js",
           tableName: "schema_migrations",
-          loadExtensions: [".cjs"],
+          loadExtensions: [".js"],
         },
         seeds: {
-          directory: resolve(process.cwd(), "db/seed/primary"),
-          loadExtensions: [".cjs"],
+          directory: "dist/db/seed/primary",
+          extension: "js",
+          loadExtensions: [".js"],
         },
       });
 
@@ -57,13 +92,15 @@ describe("db", () => {
         },
         pool: { min: 32, max: 32 },
         migrations: {
-          directory: resolve(process.cwd(), "db/migrate/secondary"),
+          directory: "dist/db/migrate/secondary",
+          extension: "js",
           tableName: "schema_migrations",
-          loadExtensions: [".cjs"],
+          loadExtensions: [".js"],
         },
         seeds: {
-          directory: resolve(process.cwd(), "db/seed/secondary"),
-          loadExtensions: [".cjs"],
+          directory: "dist/db/seed/secondary",
+          extension: "js",
+          loadExtensions: [".js"],
         },
       });
     });

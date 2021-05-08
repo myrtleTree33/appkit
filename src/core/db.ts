@@ -1,5 +1,5 @@
 import knex, { Knex } from "knex";
-import { resolve } from "path";
+import { getConfig } from "./config";
 
 export interface DB {
   primary: Knex | null;
@@ -10,6 +10,7 @@ const DB_URI_PREFIX = "APPKIT_DB_URI_";
 const DB_POOL_PREFIX = "APPKIT_DB_POOL_";
 
 export function getDB(): DB {
+  const config = getConfig();
   const db: DB = { primary: null };
 
   for (const envKey in process.env) {
@@ -27,18 +28,26 @@ export function getDB(): DB {
         client = "postgres";
       }
 
+      const extension = config.nodeEnv === "development" ? "ts" : "js";
+      const loadExtensions = config.nodeEnv === "development" ? [".ts"] : [".js"];
+
+      // Workaround for loading `.ts` migration/seed files. https://github.com/knex/knex/issues/4447
+      // process.env.npm_package_type = "module";
+
       db[dbName.toLowerCase()] = knex({
         client,
         connection: dbUri,
         pool: { min: dbPool, max: dbPool },
         migrations: {
-          directory: resolve(process.cwd(), `db/migrate/${dbName.toLowerCase()}`),
+          directory: `${config.entryRoot}/db/migrate/${dbName.toLowerCase()}`,
+          extension,
           tableName: "schema_migrations",
-          loadExtensions: [".cjs"],
+          loadExtensions,
         },
         seeds: {
-          directory: resolve(process.cwd(), `db/seed/${dbName.toLowerCase()}`),
-          loadExtensions: [".cjs"],
+          directory: `${config.entryRoot}/db/seed/${dbName.toLowerCase()}`,
+          extension,
+          loadExtensions,
         },
       });
     }
