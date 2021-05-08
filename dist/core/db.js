@@ -21,8 +21,9 @@ export function getDB() {
             }
             const extension = config.nodeEnv === "development" ? "ts" : "js";
             const loadExtensions = config.nodeEnv === "development" ? [".ts"] : [".js"];
-            // Workaround for loading `.ts` migration/seed files. https://github.com/knex/knex/issues/4447
-            // process.env.npm_package_type = "module";
+            // Workaround for loading `.ts` or `.js` (ESM) migration/seed files.
+            // Issue: https://github.com/knex/knex/issues/4447
+            process.env.npm_package_type = "module";
             db[dbName.toLowerCase()] = knex({
                 client,
                 connection: dbUri,
