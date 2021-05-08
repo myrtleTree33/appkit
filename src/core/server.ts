@@ -67,10 +67,10 @@ export class Server {
   }
 
   async close(): Promise<void> {
+    await this.#vite?.close();
     if (!this.#listenSocket) return;
     us_listen_socket_close(this.#listenSocket);
     this.#listenSocket = null;
-    await this.#vite?.close();
   }
 
   async init(): Promise<void> {
