@@ -9,7 +9,17 @@ export async function loadAppCommands() {
             absolute: true,
             filesOnly: true,
         });
-        const NON_PROD_CMDS = ["build", "db-migrate-new", "gen-secret", "lint-staged", "lint", "start", "test-unit"];
+        const NON_PROD_CMDS = [
+            "build",
+            "db-migrate-new",
+            "gen-secret",
+            "lint-staged",
+            "lint",
+            "setup",
+            "start",
+            "teardown",
+            "test-unit",
+        ];
         for (const f of builtinFiles) {
             if ((config.nodeEnv === "production" && NON_PROD_CMDS.indexOf(basename(f.replace(/\.(js|ts)/, ""))) > -1) ||
                 f.endsWith("cmd.js") ||

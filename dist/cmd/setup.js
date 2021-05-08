@@ -3,7 +3,9 @@ import { cmd, db, logger } from "..";
 async function sleep(millis) {
     return new Promise((resolve) => setTimeout(resolve, millis));
 }
-cmd.command("setup", "Setup the `docker-compose` cluster with the databases migrated/seeded.").action(async () => {
+cmd
+    .command("setup", "Setup the `docker-compose` cluster with the migrated/seeded databases. (only for NODE_ENV=development)")
+    .action(async () => {
     execSync("docker compose up -d", { stdio: "inherit" });
     try {
         for (const dbName in db) {
