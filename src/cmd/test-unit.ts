@@ -2,7 +2,7 @@ import { execSync } from "child_process";
 import { cmd } from "..";
 
 cmd
-  .command("test:unit", "Run unit tests with Jest.")
+  .command("test:unit", "Run unit tests with Jest. (only for NODE_ENV=development)")
   .option(
     "--ci",
     `Whether to run Jest in continuous integration (CI) mode. This option is on by default in most popular CI environments. It will prevent snapshots from being written unless explicitly requested.`,

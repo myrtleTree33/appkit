@@ -2,7 +2,7 @@ import nodemon from "nodemon";
 import { cmd, logger } from "..";
 const defaultPort = 9229;
 cmd
-    .command("start", "Start the server/worker in development mode.")
+    .command("start", "Start the server/worker in development mode. (only for NODE_ENV=development)")
     .option("--inspect", "Start the V8 inspector for the server/worker. By default, the inspector port for server is 9229 and for worker is 9230 which can be modified by passing in a different port number.")
     .example("./app start --inspect=9229")
     .action((opts) => {

@@ -1,7 +1,7 @@
 import { execSync } from "child_process";
 import { cmd } from "..";
 cmd
-    .command("lint", "Lint/Format the code with ESLint and Prettier.")
+    .command("lint", "Lint/Format the code with ESLint and Prettier. (only for NODE_ENV=development)")
     .option("--fix", "Fix the errors/warnings emitted by ESLint/Prettier.")
     .action(async (opts) => {
     if (opts.fix) {

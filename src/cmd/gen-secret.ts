@@ -4,7 +4,7 @@ import { cmd, logger } from "..";
 cmd
   .command(
     "gen:secret",
-    "Generate a cryptographically secure secret key (this is typically used to generate a secret for cookie sessions)."
+    "Generate a cryptographically secure secret key (this is typically used to generate a secret for cookie sessions).  (only for NODE_ENV=development)"
   )
   .action(() => {
     try {
