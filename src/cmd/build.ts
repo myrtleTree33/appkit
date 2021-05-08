@@ -1,8 +1,7 @@
 import { execSync } from "child_process";
-import logger from "core/logger";
 import { readFileSync, rmSync } from "fs";
 import { resolve } from "path";
-import { cmd } from "..";
+import { cmd, logger } from "..";
 
 cmd
   .command("build", "Compile the TS source code into JS for production deployment.")
