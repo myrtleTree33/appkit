@@ -1,4 +1,4 @@
-import { dirname } from "path";
+import { basename, dirname } from "path";
 import tinyGlob from "tiny-glob";
 import { fileURLToPath } from "url";
 import { config, logger } from "..";
@@ -11,15 +11,16 @@ export async function loadAppCommands(): Promise<void> {
       filesOnly: true,
     });
 
-    const NON_PROD_CMDS = ["db-migrate-new", "gen-secret", "lint-staged", "lint", "start", "test-unit"];
+    const NON_PROD_CMDS = ["build", "db-migrate-new", "gen-secret", "lint-staged", "lint", "start", "test-unit"];
 
     for (const f of builtinFiles) {
       if (
-        (config.nodeEnv !== "production" && NON_PROD_CMDS.indexOf(f.replace(/\.(js|ts)/, "")) > -1) ||
+        (config.nodeEnv === "production" && NON_PROD_CMDS.indexOf(basename(f.replace(/\.(js|ts)/, ""))) > -1) ||
         f.endsWith("cmd.js") ||
         f.endsWith("index.js")
       )
         continue;
+
       await import(f);
     }
 
