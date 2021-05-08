@@ -1,4 +1,4 @@
-import { readFileSync, renameSync, writeFileSync } from "node:fs";
+import { readFileSync, renameSync, writeFileSync } from "fs";
 import prettier from "prettier";
 
 const { format, resolveConfig } = prettier;
