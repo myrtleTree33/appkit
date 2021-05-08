@@ -11,9 +11,17 @@ export function getConfig() {
     if (!process.env.NODE_ENV) {
         process.env.NODE_ENV = "development";
     }
+    let outDir = "dist";
+    try {
+        const tsconfig = JSON.parse(readFileSync(`${process.cwd()}/tsconfig.json`, "utf-8"));
+        if (tsconfig?.outDir)
+            outDir = tsconfig?.outDir;
+    }
+    catch (err) {
+        // eslint-disable-next-line
+    }
+    const entryRoot = process.env.NODE_ENV === "development" ? "src" : outDir;
     const configPath = resolve(process.cwd(), `configs/${process.env.APPKIT_ENV}.env`);
-    const tsconfig = JSON.parse(readFileSync(`${process.cwd()}/tsconfig.json`, "utf-8"));
-    const entryRoot = process.env.NODE_ENV === "development" ? "src" : tsconfig?.outDir || "dist";
     config({
         path: configPath,
     });
