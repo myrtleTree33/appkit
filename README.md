@@ -27,10 +27,13 @@ $ cd demo && ./app start
 
 cmd
 
+- app starter template with npm init
 - worker - add bullmq (support development mode with app:dev)
 - cfg:enc - encrypt/append config value into <APPKIT_ENV>.env
 - cfg:dec - decrypt config value from <APPKIT_ENV>.env
 - db:new - add new database
+- build --docker - dockerise the app for production deployment
+- start --docker - build and run the app in docker container
 
 core
 
@@ -41,3 +44,4 @@ core
 - support casbin
 - support graphql
 - support swagger with openapi 3
+- support opentracing
