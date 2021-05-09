@@ -8,14 +8,15 @@ An opinionated productive Typescript-first web framework to supercharge your fea
 
 ## Getting Started
 
-```sh
+```
 // Install project's global tooling.
 $ make init
 
 // Install project's dependencies.
 $ npm i
 
-// Run `tsc` with watch mode to continously compiled the framework's TS code to be used in `demo` project.
+// Run `tsc` with watch mode to continously compiled the framework's TS code
+// to be used in `demo` project.
 $ npm run build -- -w
 
 // Start developing with `demo` project.
