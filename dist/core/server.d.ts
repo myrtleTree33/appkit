@@ -8,13 +8,16 @@ declare module "uWebSockets.js" {
         ctx: {
             [key: string]: any;
         };
+        params: {
+            [key: string]: any;
+        };
     }
     interface TemplatedApp {
-        [key: string]: (pattern: RecognizedString, handler: Handler) => TemplatedApp;
+        [key: string]: (pattern: RecognizedString, handler: (res: HttpResponse, req: HttpRequest) => void) => TemplatedApp;
     }
 }
 export type { HttpRequest, HttpResponse } from "uWebSockets.js";
-export declare type Handler = (res: HttpResponse, req: HttpRequest) => void;
+export declare type Handler = (req: HttpRequest, res: HttpResponse) => Promise<void>;
 export declare type Routes = {
     [key: string]: Route;
 };
