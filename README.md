@@ -15,7 +15,7 @@ $ make init
 // Install project's dependencies.
 $ npm i
 
-// Run `tsc` with watch mode to continously compiled the framework's TS code
+// Run `tsc` with watch mode to continously compile the framework's TS code
 // to be used in `demo` project.
 $ npm run build -- -w
 
