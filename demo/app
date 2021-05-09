@@ -1,0 +1,11 @@
+#!/bin/sh
+
+if [[ -z "${NODE_ENV}" || "${NODE_ENV}" = "development" ]]; then
+  node --es-module-specifier-resolution=node --no-warnings --loader ts-node/esm -r ts-node/register ./src/index.ts $@
+else
+  if [ ! -d "dist" ]; then
+    NODE_ENV=development node --es-module-specifier-resolution=node --no-warnings --loader ts-node/esm -r ts-node/register ./src/index.ts build
+  fi
+
+  node --es-module-specifier-resolution=node ./dist/index.js $@
+fi

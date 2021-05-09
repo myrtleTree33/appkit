@@ -1,0 +1,51 @@
+{
+  "name": "demo",
+  "version": "1.0.0",
+  "description": "A demo project that uses appkit web framework.",
+  "type": "module",
+  "license": "MIT",
+  "scripts": {
+    "prepare": "husky install"
+  },
+  "dependencies": {
+    "@appist/appkit": "file:.."
+  },
+  "eslintConfig": {
+    "root": true,
+    "parser": "@typescript-eslint/parser",
+    "extends": [
+      "eslint:recommended",
+      "plugin:@typescript-eslint/recommended",
+      "prettier"
+    ],
+    "plugins": [
+      "@typescript-eslint"
+    ],
+    "parserOptions": {
+      "sourceType": "module",
+      "ecmaVersion": 2021
+    },
+    "env": {
+      "es2021": true,
+      "node": true
+    },
+    "rules": {
+      "@typescript-eslint/no-var-requires": 0
+    }
+  },
+  "eslintIgnore": [
+    ".DS_Store",
+    "coverage",
+    "dist",
+    "node_modules"
+  ],
+  "lint-staged": {
+    "*.{ts}": "eslint --fix",
+    "*.{json,md,ts}": "prettier --write"
+  },
+  "prettier": {
+    "printWidth": 120,
+    "tabWidth": 2,
+    "useTabs": false
+  }
+}

@@ -1,0 +1,19 @@
+version: "3.9"
+
+services:
+  app-db:
+    image: bitnami/mysql:8.0
+    ports:
+      - "33306:3306"
+    environment:
+      - MYSQL_DATABASE=main
+      - MYSQL_ROOT_PASSWORD=whatever
+      - MYSQL_USER=main
+      - MYSQL_PASSWORD=whatever
+
+  app-cache:
+    image: bitnami/redis:6.0.9
+    ports:
+      - "36379:6379"
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
