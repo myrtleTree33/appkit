@@ -4,7 +4,25 @@
 
 An opinionated productive Typescript-first web framework to supercharge your feature development.
 
-#### Roadmap
+> Note: Only supported on Linux/MacOS. For Windows users, please use WSL2.
+
+## Getting Started
+
+```sh
+// Install project's global tooling.
+$ make init
+
+// Install project's dependencies.
+$ npm i
+
+// Run `tsc` with watch mode to continously compiled the framework's TS code to be used in `demo` project.
+$ npm run build -- -w
+
+// Start developing with `demo` project.
+$ cd demo && ./app start
+```
+
+## Roadmap
 
 cmd
 

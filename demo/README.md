@@ -1,3 +1,3 @@
-# appcourse
+# demo
 
-An open source online learning and teaching marketplace.
+A demo project that uses appkit web framework.
