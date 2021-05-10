@@ -7,5 +7,6 @@ export interface Config {
     nodeEnv: string;
     port: number;
     routesPath: string;
+    signedCookiesSecret: string;
 }
 export declare function getConfig(): Config;

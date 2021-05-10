@@ -27,6 +27,7 @@ describe("config", () => {
         nodeEnv: "development",
         port: 3000,
         routesPath: "src/routes",
+        signedCookiesSecret: "",
       });
     });
   });
@@ -48,6 +49,8 @@ describe("config", () => {
         nodeEnv: "test",
         port: 5000,
         routesPath: "dist/routes",
+        signedCookiesSecret:
+          "a7ab2500d4d7a52e66e07b883126773c8b147da8e4190c2b713fea1bbf47588dfbf1eac617d495e1430cc27cd1cb09af0827df7f58b68be6f69c2ebd63767813",
       });
       expect(process.env.APPKIT_DB_URI_PRIMARY).toEqual("mysql://main:whatever@0.0.0.0:33306/main");
       expect(process.env.APPKIT_DB_POOL_PRIMARY).toEqual("16");
@@ -75,6 +78,8 @@ describe("config", () => {
         nodeEnv: "test",
         port: 5000,
         routesPath: "dist/routes",
+        signedCookiesSecret:
+          "a7ab2500d4d7a52e66e07b883126773c8b147da8e4190c2b713fea1bbf47588dfbf1eac617d495e1430cc27cd1cb09af0827df7f58b68be6f69c2ebd63767813",
       });
       expect(process.env.APPKIT_DB_URI_PRIMARY).toEqual("db_uri_primary");
       expect(process.env.APPKIT_DB_POOL_PRIMARY).toEqual("32");
@@ -97,6 +102,7 @@ describe("config", () => {
         nodeEnv: "test",
         port: 3000,
         routesPath: "dist/routes",
+        signedCookiesSecret: "",
       });
     });
   });

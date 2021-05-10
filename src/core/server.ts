@@ -2,8 +2,10 @@ import type { default as IRouter } from "@koa/router";
 import type { HttpRequest, HttpResponse, RecognizedString, TemplatedApp, us_listen_socket } from "uWebSockets.js";
 import type { ViteDevServer } from "vite";
 
-import tinyGlob from "tiny-glob";
 import Router from "@koa/router";
+import qs from "qs";
+import cookieParser from "cookie-parser";
+import tinyGlob from "tiny-glob";
 import uWebSockets from "uWebSockets.js";
 import { createServer } from "vite";
 const { App, us_listen_socket_close } = uWebSockets;
@@ -14,15 +16,50 @@ import { getRouterPathFromFilename } from "./util";
 declare module "uWebSockets.js" {
   interface HttpResponse {
     isAborted: boolean;
-    // eslint-disable-next-line
-    json: (obj: any, status?: string | number) => void;
+    json: (obj: unknown, status?: string | number) => void;
   }
 
   interface HttpRequest {
-    // eslint-disable-next-line
-    ctx: { [key: string]: any };
-    // eslint-disable-next-line
-    params: { [key: string]: any };
+    /**
+     * Contains key-value pairs in the request cookies. By default, it is {}.
+     */
+    cookies: { [key: string]: string };
+
+    /**
+     * Contains key-value pairs in the request cookies that are signed. By default, it is {}.
+     */
+    signedCookies: { [key: string]: string };
+
+    ctx: { [key: string]: unknown };
+
+    /**
+     * Contains key-value pairs in the request headers. Note that the key must be lower case. By default, it is {}.
+     */
+    headers: { [key: string]: string };
+
+    /**
+     * Contains a string corresponding to the HTTP method of the request: GET, POST, PUT, and so on.
+     */
+    method: string;
+
+    /**
+     * Contains key-value pairs mapped to the route's named parameters. For example, if the route is "/user/:name",
+     * then the "name" property is available as req.params.name. By default, it is {}.
+     */
+    params: { [key: string]: string };
+
+    /**
+     * Contains the path part of the request URL. For example, if the request URL is http://api.dev/user, then the
+     * path will be "/user".
+     */
+    path: string;
+
+    /**
+     * Contains key-value pairs mapped to the route's query string parameters. For example, if the query string is
+     * "/shoes?order=desc&shoe[color]=blue&shoe[type]=converse", then "req.query" will be
+     * { "shoe": { "color": "blue", "type": "converse" } }.
+     */
+    query: { [key: string]: unknown };
   }
 
   interface TemplatedApp {
@@ -116,14 +153,16 @@ export class Server {
 
               // eslint-disable-next-line
               // @ts-ignore
-              // eslint-disable-next-line
-              this.#router[method](path, () => {});
+              this.#router[method](path, () => {
+                // Don't need to anything as we are only using the route matching due to the route matching from
+                // uWebSockets.js doesn't meet our need.
+              });
             }
           }
         }),
       ]);
 
-      // Use @koa/router to better handle the routing.
+      // Use @koa/router to better handle the route matching.
       this.#server.any("/*", (res: HttpResponse, req: HttpRequest) => {
         const match = this.#router.match(req.getUrl(), req.getMethod());
 
@@ -133,18 +172,46 @@ export class Server {
 
         const route = this.#routes[`${req.getMethod()} ${match.path[0].path}`];
 
-        // Setup HttpRequest helpers.
+        // Set the request context.
         req.ctx = {};
+
+        // Set the request headers.
+        req.headers = {};
+        req.forEach((k, v) => (req.headers[k] = v));
+
+        // Set the request cookies and signed cookies.
+        if (req.headers["cookie"]) {
+          cookieParser(config.signedCookiesSecret)(
+            // eslint-disable-next-line
+            // @ts-ignore
+            req,
+            res,
+            () => {
+              // Not doing anything as we only need to set req.cookies and req.signedCookies.
+            }
+          );
+        }
+
+        // Set the request method.
+        req.method = req.getMethod();
+
+        // Set the request path.
+        req.path = req.getUrl();
+
+        // Set the request params.
+        const params = match.path[0]?.captures(req.getUrl());
+        req.getParameter = function (index: number): string {
+          return index < params.length ? params[index] : "";
+        };
+        req.params = (match.path[0].params(req.getUrl(), params) as { [key: string]: string }) || {};
+
+        // Set the request query string params.
+        req.query = qs.parse(req.getQuery());
 
         // Setup HttpResponse helpers.
         res.isAborted = false;
         res.onAborted(() => (res.isAborted = true));
-
-        // Setup the HttpRequest params.
-        req.params = match.path[0].params(req.getUrl(), match.path[0]?.captures(req.getUrl())) || {};
-
-        // eslint-disable-next-line
-        res.__proto__.json = function (obj: any, status = "200") {
+        res.__proto__.json = function (obj: unknown, status = "200") {
           if (this.isAborted) return;
 
           this.cork(() => {
@@ -170,12 +237,17 @@ export class Server {
     this.#vite = await createServer();
   }
 
-  async listen(
-    host: RecognizedString,
-    port: number,
-    cb: (listenSocket: us_listen_socket) => void
-  ): Promise<TemplatedApp> {
-    return this.#server.listen(host, port, cb);
+  listen(host: RecognizedString, port: number, cb?: () => void): TemplatedApp {
+    this.#server.listen(host, port, (socket: us_listen_socket): void => {
+      if (socket) {
+        this.#listenSocket = socket;
+        logger.info(`Server is listening on http://${config.host}:${config.port}...`);
+      }
+
+      if (cb) cb();
+    });
+
+    return this.#server;
   }
 }
 

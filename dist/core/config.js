@@ -34,6 +34,7 @@ export function getConfig() {
         nodeEnv: process.env.NODE_ENV || "development",
         port: parseInt(process.env.APPKIT_PORT || "") || 3000,
         routesPath: `${entryRoot}/${process.env.APPKIT_ROUTES_PATH || "routes"}`,
+        signedCookiesSecret: process.env.APPKIT_SIGNED_COOKIES_SECRET || "",
     };
     return cfg;
 }
