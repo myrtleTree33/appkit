@@ -27,7 +27,7 @@ export async function loadAppCommands() {
                 continue;
             await import(f);
         }
-        const appFiles = await tinyGlob(`${process.cwd()}/${config.entryRoot}/commands/**/*.${config.nodeEnv === "development" ? "ts" : "js"}`, {
+        const appFiles = await tinyGlob(`${config.entryRoot}/commands/**/*.${config.nodeEnv === "development" ? "ts" : "js"}`, {
             absolute: true,
             filesOnly: true,
         });

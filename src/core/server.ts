@@ -237,8 +237,8 @@ export class Server {
     this.#vite = await createServer();
   }
 
-  listen(host: RecognizedString, port: number, cb?: () => void): TemplatedApp {
-    this.#server.listen(host, port, (socket: us_listen_socket): void => {
+  listen(cb?: () => void): TemplatedApp {
+    this.#server.listen(config.host, config.port, (socket: us_listen_socket): void => {
       if (socket) {
         this.#listenSocket = socket;
         logger.info(`Server is listening on http://${config.host}:${config.port}...`);

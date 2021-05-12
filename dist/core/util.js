@@ -13,7 +13,7 @@ export function getRouterPathFromFilename(fn) {
         return "";
     // eslint-disable-next-line
     const segments = fn
-        .replace(`${process.cwd()}/${config.routesPath}/`, "")
+        .replace(`${config.routesPath}/`, "")
         .replace(/\.(js|svelte|ts)/, "")
         .split("/");
     if (segments.length === 1 && segments[0].startsWith("index"))

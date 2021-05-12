@@ -1,5 +1,5 @@
 import { getServer } from "../core/server";
-import { cmd, config, logger } from "..";
+import { cmd, logger } from "..";
 import { db } from "../globals";
 cmd.command("server", "Start the HTTP server.").action(async () => {
     const server = await getServer();
@@ -14,7 +14,7 @@ cmd.command("server", "Start the HTTP server.").action(async () => {
     try {
         process.on("SIGINT", handler);
         process.on("SIGTERM", handler);
-        server.listen(config.host, config.port);
+        server.listen();
     }
     catch (err) {
         logger.error(err);

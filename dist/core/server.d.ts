@@ -1,4 +1,4 @@
-import type { HttpRequest, HttpResponse, RecognizedString, TemplatedApp, us_listen_socket } from "uWebSockets.js";
+import type { HttpRequest, HttpResponse, TemplatedApp, us_listen_socket } from "uWebSockets.js";
 declare module "uWebSockets.js" {
     interface HttpResponse {
         isAborted: boolean;
@@ -76,6 +76,6 @@ export declare class Server {
     init(): Promise<void>;
     initRoutes(): Promise<void>;
     initViteDevServer(): Promise<void>;
-    listen(host: RecognizedString, port: number, cb?: () => void): TemplatedApp;
+    listen(cb?: () => void): TemplatedApp;
 }
 export declare function getServer(): Promise<Server>;

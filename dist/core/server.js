@@ -134,8 +134,8 @@ export class Server {
     async initViteDevServer() {
         this.#vite = await createServer();
     }
-    listen(host, port, cb) {
-        this.#server.listen(host, port, (socket) => {
+    listen(cb) {
+        this.#server.listen(config.host, config.port, (socket) => {
             if (socket) {
                 this.#listenSocket = socket;
                 logger.info(`Server is listening on http://${config.host}:${config.port}...`);

@@ -35,7 +35,7 @@ export async function loadAppCommands(): Promise<void> {
     }
 
     const appFiles = await tinyGlob(
-      `${process.cwd()}/${config.entryRoot}/commands/**/*.${config.nodeEnv === "development" ? "ts" : "js"}`,
+      `${config.entryRoot}/commands/**/*.${config.nodeEnv === "development" ? "ts" : "js"}`,
       {
         absolute: true,
         filesOnly: true,

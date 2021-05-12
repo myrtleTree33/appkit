@@ -6,7 +6,7 @@ describe("util", () => {
     const config = getConfig();
 
     function absPath(path: string): string {
-      return `${process.cwd()}/${config.routesPath}/${path}`;
+      return `${config.routesPath}/${path}`;
     }
 
     const testCases = {

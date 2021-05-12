@@ -4,6 +4,7 @@ import type { HttpRequest, HttpResponse } from "../../../../../../../server";
 
 export const get = async (req: HttpRequest, res: HttpResponse): Promise<void> => {
   return res.json({
+    source: "ts",
     cookies: req.cookies,
     signedCookies: req.signedCookies,
     headers: req.headers,
