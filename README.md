@@ -45,3 +45,11 @@ core
 - support graphql
 - support swagger with openapi 3
 - support opentracing
+
+## Credits
+
+This project is heavily inspired by:
+
+- [Rails](https://rubyonrails.org/)
+- [SvelteKit](https://kit.svelte.dev/)
+- [ViteJS](https://vitejs.dev/)
