@@ -1,7 +1,13 @@
 export type { DB } from "./core/db";
 export type { Logger } from "./core/logger";
-export type { HttpRequest, HttpResponse, Server } from "./core/server";
-
+export type {
+  CookieSerializeOptions,
+  HttpRequest,
+  HttpResponse,
+  Route,
+  Routes,
+  Server,
+} from "./core/server";
 export { config, db, logger } from "./globals";
 
 import { getCmd, loadAppCommands } from "./cmd";
