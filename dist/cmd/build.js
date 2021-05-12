@@ -13,7 +13,10 @@ cmd
             return;
         }
         if (tsconfig.compilerOptions?.outDir) {
-            rmSync(resolve(`${process.cwd()}/${tsconfig.compilerOptions?.outDir}`), { recursive: true, force: true });
+            rmSync(resolve(`${process.cwd()}/${tsconfig.compilerOptions?.outDir}`), {
+                recursive: true,
+                force: true,
+            });
         }
         execSync("npm exec tsc", { stdio: "inherit" });
     }

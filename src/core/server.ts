@@ -1,5 +1,11 @@
 import type { default as IRouter } from "@koa/router";
-import type { HttpRequest, HttpResponse, RecognizedString, TemplatedApp, us_listen_socket } from "uWebSockets.js";
+import type {
+  HttpRequest,
+  HttpResponse,
+  RecognizedString,
+  TemplatedApp,
+  us_listen_socket,
+} from "uWebSockets.js";
 import type { ViteDevServer } from "vite";
 
 import Router from "@koa/router";
@@ -64,7 +70,10 @@ declare module "uWebSockets.js" {
 
   interface TemplatedApp {
     // To allow dynamic route setup in Server#initRoutes().
-    [key: string]: (pattern: RecognizedString, handler: (res: HttpResponse, req: HttpRequest) => void) => TemplatedApp;
+    [key: string]: (
+      pattern: RecognizedString,
+      handler: (res: HttpResponse, req: HttpRequest) => void
+    ) => TemplatedApp;
   }
 }
 
@@ -124,7 +133,9 @@ export class Server {
   async initRoutes(): Promise<void> {
     try {
       const files = await tinyGlob(
-        `${config.routesPath}/**/!(*.spec|*.test).${config.nodeEnv === "development" ? "{md,mdx,ts,svelte}" : "{js}"}`,
+        `${config.routesPath}/**/!(*.spec|*.test).${
+          config.nodeEnv === "development" ? "{md,mdx,ts,svelte}" : "{js}"
+        }`,
         {
           absolute: true,
           filesOnly: true,
@@ -140,7 +151,18 @@ export class Server {
             for (const method of Object.keys(mod)) {
               if (
                 typeof mod[method] !== "function" ||
-                ["any", "connect", "del", "get", "head", "options", "patch", "post", "put", "trace"].indexOf(method) < 0
+                [
+                  "any",
+                  "connect",
+                  "del",
+                  "get",
+                  "head",
+                  "options",
+                  "patch",
+                  "post",
+                  "put",
+                  "trace",
+                ].indexOf(method) < 0
               ) {
                 continue;
               }
@@ -203,7 +225,8 @@ export class Server {
         req.getParameter = function (index: number): string {
           return index < params.length ? params[index] : "";
         };
-        req.params = (match.path[0].params(req.getUrl(), params) as { [key: string]: string }) || {};
+        req.params =
+          (match.path[0].params(req.getUrl(), params) as { [key: string]: string }) || {};
 
         // Set the request query string params.
         req.query = qs.parse(req.getQuery());

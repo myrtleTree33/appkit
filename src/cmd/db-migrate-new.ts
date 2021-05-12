@@ -6,7 +6,10 @@ const { format, resolveConfig } = prettier;
 import { cmd, db, logger } from "..";
 
 cmd
-  .command("db:migrate:new <name>", "Generate a new database migration file. (only for NODE_ENV=development)")
+  .command(
+    "db:migrate:new <name>",
+    "Generate a new database migration file. (only for NODE_ENV=development)"
+  )
   .example("db:migrate:new create_users")
   .option("-t, --target", "The target database to work with.", "primary")
   .action(async (name, opts) => {

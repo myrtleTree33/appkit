@@ -14,6 +14,12 @@
     "strict": true,
     "target": "ESNext"
   },
-  "exclude": ["node_modules", "**/__fixtures__/*", "**/__mocks__/*", "src/**/*.spec.ts", "src/**/*.test.ts"],
+  "exclude": [
+    "node_modules",
+    "**/__fixtures__/*",
+    "**/__mocks__/*",
+    "src/**/*.spec.ts",
+    "src/**/*.test.ts"
+  ],
   "include": ["src"]
 }

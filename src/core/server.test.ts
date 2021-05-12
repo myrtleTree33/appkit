@@ -36,9 +36,11 @@ describe("server", () => {
         res = await superagent.get(`http://${server.address()}${path}`).send();
       });
 
-      test("should return body with source equals to 'ts'", () => expect(res.body.source).toBe("ts"));
+      test("should return body with source equals to 'ts'", () =>
+        expect(res.body.source).toBe("ts"));
       test("should return body with no cookies", () => expect(res.body.cookies).toBeUndefined());
-      test("should return body with the empty query string params", () => expect(res.body.query).toEqual({}));
+      test("should return body with the empty query string params", () =>
+        expect(res.body.query).toEqual({}));
       test("should return body with the headers", () =>
         expect(res.body.headers).toEqual({
           "accept-encoding": "gzip, deflate",
@@ -80,9 +82,11 @@ describe("server", () => {
         res = await superagent.get(`http://${server.address()}${path}`).send();
       });
 
-      test("should return body with source equals to 'js'", () => expect(res.body.source).toBe("js"));
+      test("should return body with source equals to 'js'", () =>
+        expect(res.body.source).toBe("js"));
       test("should return body with no cookies", () => expect(res.body.cookies).toBeUndefined());
-      test("should return body with the empty query string params", () => expect(res.body.query).toEqual({}));
+      test("should return body with the empty query string params", () =>
+        expect(res.body.query).toEqual({}));
       test("should return body with the headers", () =>
         expect(res.body.headers).toEqual({
           "accept-encoding": "gzip, deflate",

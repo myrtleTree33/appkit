@@ -27,7 +27,9 @@ export function getConfig() {
         configPath: configPath.replace(`${process.cwd()}/`, ""),
         entryRoot,
         host: process.env.APPKIT_HOST || "0.0.0.0",
-        loggerRedactPaths: process.env.APPKIT_LOGGER_REDACT_PATHS ? process.env.APPKIT_LOGGER_REDACT_PATHS.split(",") : [],
+        loggerRedactPaths: process.env.APPKIT_LOGGER_REDACT_PATHS
+            ? process.env.APPKIT_LOGGER_REDACT_PATHS.split(",")
+            : [],
         nodeEnv: process.env.NODE_ENV || "development",
         port: parseInt(process.env.APPKIT_PORT || "") || 3000,
         routesPath: `${entryRoot}/${process.env.APPKIT_ROUTES_PATH || "routes"}`,

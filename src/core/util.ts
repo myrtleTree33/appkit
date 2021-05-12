@@ -8,7 +8,11 @@ export const SUPPORTED_EXTS = [".js", ".svelte", ".ts"];
 
 export type Middleware = (req: HttpRequest, res: HttpResponse) => Promise<boolean>;
 
-export async function useMiddleware(req: HttpRequest, res: HttpResponse, middleware: Array<Middleware>): Promise<void> {
+export async function useMiddleware(
+  req: HttpRequest,
+  res: HttpResponse,
+  middleware: Array<Middleware>
+): Promise<void> {
   for (let i = 0; i < middleware.length; i++) {
     if (res.isAborted || !(await middleware[i](req, res))) break;
   }

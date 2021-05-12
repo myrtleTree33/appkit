@@ -1,6 +1,6 @@
 import { Knex } from "knex";
 
-export const seed = async (knex: Knex) => {
+export async function seed(knex: Knex): Promise<void> {
   await knex("users")
     .del()
     .insert([
@@ -17,4 +17,4 @@ export const seed = async (knex: Knex) => {
         password: "whatever",
       },
     ]);
-};
+}

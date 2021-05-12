@@ -25,7 +25,8 @@ export async function loadAppCommands(): Promise<void> {
 
     for (const f of builtinFiles) {
       if (
-        (config.nodeEnv === "production" && NON_PROD_CMDS.indexOf(basename(f.replace(/\.(js|ts)/, ""))) > -1) ||
+        (config.nodeEnv === "production" &&
+          NON_PROD_CMDS.indexOf(basename(f.replace(/\.(js|ts)/, ""))) > -1) ||
         f.endsWith("cmd.js") ||
         f.endsWith("index.js")
       )

@@ -1,4 +1,3 @@
-import { resolve } from "path";
 import type { DB } from "./db";
 
 describe("db", () => {

@@ -56,7 +56,18 @@ export class Server {
                         const path = getRouterPathFromFilename(fn);
                         for (const method of Object.keys(mod)) {
                             if (typeof mod[method] !== "function" ||
-                                ["any", "connect", "del", "get", "head", "options", "patch", "post", "put", "trace"].indexOf(method) < 0) {
+                                [
+                                    "any",
+                                    "connect",
+                                    "del",
+                                    "get",
+                                    "head",
+                                    "options",
+                                    "patch",
+                                    "post",
+                                    "put",
+                                    "trace",
+                                ].indexOf(method) < 0) {
                                 continue;
                             }
                             this.#routes[`${method} ${path}`] = {
@@ -104,7 +115,8 @@ export class Server {
                 req.getParameter = function (index) {
                     return index < params.length ? params[index] : "";
                 };
-                req.params = match.path[0].params(req.getUrl(), params) || {};
+                req.params =
+                    match.path[0].params(req.getUrl(), params) || {};
                 // Set the request query string params.
                 req.query = qs.parse(req.getQuery());
                 // Setup HttpResponse helpers.

@@ -44,7 +44,7 @@
     "*.{json,md,ts}": "prettier --write"
   },
   "prettier": {
-    "printWidth": 120,
+    "printWidth": 100,
     "tabWidth": 2,
     "useTabs": false
   }
