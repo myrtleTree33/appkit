@@ -17,7 +17,7 @@ export function getConfig() {
     catch (err) {
         // eslint-disable-next-line
     }
-    const entryRoot = process.env.NODE_ENV === "development" ? "src" : outDir;
+    const entryRoot = resolve(process.cwd(), process.env.NODE_ENV === "development" ? "src" : outDir);
     const configPath = resolve(process.cwd(), `configs/${process.env.APPKIT_ENV}.env`);
     config({
         path: configPath,
