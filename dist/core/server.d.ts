@@ -1,5 +1,5 @@
 import type { CookieSerializeOptions } from "cookie";
-import type { HttpRequest, HttpResponse, TemplatedApp, us_listen_socket } from "uWebSockets.js";
+import type { HttpRequest, HttpResponse, TemplatedApp } from "uWebSockets.js";
 declare module "cookie" {
     interface CookieSerializeOptions {
         /**
@@ -91,8 +91,6 @@ export interface Route {
 export declare class Server {
     #private;
     constructor();
-    get listenSocket(): us_listen_socket | null;
-    set listenSocket(_listenSocket: us_listen_socket | null);
     get routes(): Routes;
     address(): string;
     close(): Promise<void>;

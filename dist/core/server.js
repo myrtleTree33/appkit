@@ -22,12 +22,6 @@ export class Server {
     #vite;
     #router;
     #routes;
-    get listenSocket() {
-        return this.#listenSocket;
-    }
-    set listenSocket(_listenSocket) {
-        this.#listenSocket = _listenSocket;
-    }
     get routes() {
         return this.#routes;
     }

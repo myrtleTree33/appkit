@@ -109,6 +109,11 @@ describe("server", () => {
       test("should return status code = 200", () => expect(res.status).toBe(200));
       test("should return body with source = 'ts'", () => expect(res.body.source).toBe("ts"));
       test("should return body with foo = 'bar'", () => expect(res.body.foo).toBe("bar"));
+      test("should not return cookies", () => {
+        const cookies = res.get("Set-Cookie");
+
+        expect(cookies).toBeUndefined();
+      });
     });
   });
 
@@ -206,6 +211,15 @@ describe("server", () => {
       test("should return status code = 200", () => expect(res.status).toBe(200));
       test("should return body with source = 'js'", () => expect(res.body.source).toBe("js"));
       test("should return body with foo = 'bar'", () => expect(res.body.foo).toBe("bar"));
+      test("should return cookies", () => {
+        const cookies = res.get("Set-Cookie");
+
+        expect(cookies).toHaveLength(1);
+        expect(cookies[0]).toContain("foo=s%3Abar.i1MQizrc%2BFSpfmpo7i9abaki54qlksc0wO4iafeCWYQ;");
+        expect(cookies[0]).toContain("Max-Age=1;");
+        expect(cookies[0]).toContain("Path=/;");
+        expect(cookies[0]).toContain("Expires=");
+      });
     });
   });
 });

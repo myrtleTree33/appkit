@@ -124,15 +124,7 @@ export class Server {
     this.#routes = {};
   }
 
-  public get listenSocket(): us_listen_socket | null {
-    return this.#listenSocket;
-  }
-
-  public set listenSocket(_listenSocket: us_listen_socket | null) {
-    this.#listenSocket = _listenSocket;
-  }
-
-  public get routes(): Routes {
+  get routes(): Routes {
     return this.#routes;
   }
 
