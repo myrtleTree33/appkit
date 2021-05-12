@@ -126,8 +126,6 @@ export class Server {
             });
         }
         catch (err) {
-            if (config.nodeEnv === "test")
-                return;
             logger.error(err);
         }
     }
