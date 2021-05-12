@@ -228,7 +228,6 @@ export class Server {
         return route.handler(req, res);
       });
     } catch (err) {
-      if (config.nodeEnv === "test") return;
       logger.error(err);
     }
   }
