@@ -30,6 +30,7 @@ export class Server {
         return this.#routes;
     }
     address() {
+        console.log(config);
         return `${config.host}:${config.port}`;
     }
     async close() {

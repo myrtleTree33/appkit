@@ -1,10 +1,7 @@
 import { config } from "dotenv";
 import { readFileSync } from "fs";
 import { resolve } from "path";
-let cfg;
 export function getConfig() {
-    if (cfg)
-        return cfg;
     if (!process.env.APPKIT_ENV) {
         process.env.APPKIT_ENV = "development";
     }
@@ -25,7 +22,7 @@ export function getConfig() {
     config({
         path: configPath,
     });
-    cfg = {
+    return {
         appkitEnv: process.env.APPKIT_ENV || "development",
         configPath: configPath.replace(`${process.cwd()}/`, ""),
         entryRoot,
@@ -36,5 +33,4 @@ export function getConfig() {
         routesPath: `${entryRoot}/${process.env.APPKIT_ROUTES_PATH || "routes"}`,
         signedCookiesSecret: process.env.APPKIT_SIGNED_COOKIES_SECRET || "",
     };
-    return cfg;
 }

@@ -7,26 +7,23 @@ describe("logger", () => {
     process.env = { ...OLD_ENV };
   });
 
-  afterAll(() => {
+  afterEach(() => {
     process.env = OLD_ENV;
+    jest.resetModules();
   });
 
   test("returns the logger for development mode", () => {
-    jest.isolateModules(() => {
-      process.env.NODE_ENV = "development";
-      const { getLogger } = require("./logger");
-      const logger: Logger = getLogger();
+    process.env.NODE_ENV = "development";
+    const { getLogger } = require("./logger");
+    const logger: Logger = getLogger();
 
-      expect(logger.level).toBe("debug");
-    });
+    expect(logger.level).toBe("debug");
   });
 
   test("returns the logger for production mode", () => {
-    jest.isolateModules(() => {
-      const { getLogger } = require("./logger");
-      const logger: Logger = getLogger();
+    const { getLogger } = require("./logger");
+    const logger: Logger = getLogger();
 
-      expect(logger.level).toBe("info");
-    });
+    expect(logger.level).toBe("info");
   });
 });

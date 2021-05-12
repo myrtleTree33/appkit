@@ -2,8 +2,6 @@ import { config } from "dotenv";
 import { readFileSync } from "fs";
 import { resolve } from "path";
 
-let cfg: Config;
-
 export interface Config {
   appkitEnv: string;
   configPath: string;
@@ -17,8 +15,6 @@ export interface Config {
 }
 
 export function getConfig(): Config {
-  if (cfg) return cfg;
-
   if (!process.env.APPKIT_ENV) {
     process.env.APPKIT_ENV = "development";
   }
@@ -36,14 +32,14 @@ export function getConfig(): Config {
     // eslint-disable-next-line
   }
 
-  const entryRoot = process.env.NODE_ENV === "development" ? "src" : outDir;
+  const entryRoot = resolve(process.cwd(), process.env.NODE_ENV === "development" ? "src" : outDir);
   const configPath = resolve(process.cwd(), `configs/${process.env.APPKIT_ENV}.env`);
 
   config({
     path: configPath,
   });
 
-  cfg = {
+  return {
     appkitEnv: process.env.APPKIT_ENV || "development",
     configPath: configPath.replace(`${process.cwd()}/`, ""),
     entryRoot,
@@ -54,6 +50,4 @@ export function getConfig(): Config {
     routesPath: `${entryRoot}/${process.env.APPKIT_ROUTES_PATH || "routes"}`,
     signedCookiesSecret: process.env.APPKIT_SIGNED_COOKIES_SECRET || "",
   };
-
-  return cfg;
 }
